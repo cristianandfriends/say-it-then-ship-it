@@ -1,0 +1,20 @@
+{
+  "name": "say-it-then-ship-it",
+  "private": true,
+  "workspaces": [
+    "web"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace web --",
+    "build": "npm run build --workspace web",
+    "check": "npm run check --workspace web",
+    "preview": "npm run preview --workspace web --",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1"
+  },
+  "engines": {
+    "node": ">=22.23.4"
+  }
+}

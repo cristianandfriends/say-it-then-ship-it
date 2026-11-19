@@ -1,0 +1,57 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getMaterials, materialInfo } from "../lib/materials";
+import { discordUrl, openSlidesUrl, slidesUrl } from "../../site.config.mjs";
+
+const materials = (await getMaterials()).map(materialInfo);
+---
+
+<Layout>
+  <section id="slides" class="deck-window" aria-labelledby="deck-title">
+    <div class="window-bar">
+      <h2 id="deck-title">Live slides</h2>
+      <a href={openSlidesUrl}>Open deck <span aria-hidden="true">↗</span></a>
+    </div>
+    <iframe
+      class="slide-deck"
+      src={slidesUrl}
+      title="Say it, then ship it: live presentation"
+      width="1440"
+      height="839"
+      allowfullscreen
+      referrerpolicy="strict-origin-when-cross-origin"
+    ></iframe>
+  </section>
+
+  <section class="intro" aria-labelledby="lab-title">
+    <div>
+      <h1 id="lab-title">Say it, then ship it<span class="cursor" aria-hidden="true">_</span></h1>
+      <p>Bring an idea. Build it with GitHub Copilot and OpenCode.</p>
+      <p class="discussion">Ask questions and share your work in <a href={discordUrl}>the live Discord chat</a>.</p>
+    </div>
+    <pre class="ascii-flow" aria-label="Describe your idea, work with an agent, review the result, and ship.">[ you ] &lt;--&gt; [ agent ]
+   |
+   +--&gt; review --&gt; ship</pre>
+  </section>
+
+  <section id="files" class="file-section" aria-labelledby="files-title">
+    <div class="file-heading">
+      <h2 id="files-title">Lab files</h2>
+      <span>Read here. Use in your repo.</span>
+    </div>
+    <ul class="file-list">
+      {materials.map((material) => (
+        <li>
+          <a class="file-link" href={material.href}>
+            <div class="file-details">
+              <span class="file-path">{material.sourcePath}</span>
+              <span class="file-title">{material.title}</span>
+              {material.description && <span class="file-description">{material.description}</span>}
+            </div>
+            <span class="read-label" aria-hidden="true">[ Read ]</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Layout>

@@ -1,0 +1,95 @@
+---
+import { render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import { getMaterials, materialInfo } from "../../lib/materials";
+import { withBase } from "../../../site.config.mjs";
+
+export async function getStaticPaths() {
+  return (await getMaterials()).map((entry) => ({
+    params: { path: materialInfo(entry).route },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const material = materialInfo(entry);
+const { Content, headings } = await render(entry);
+---
+
+<Layout title={material.title} description={material.description}>
+  <div class="reader-toolbar">
+    <a href={withBase("#files")}>[ Back to lab files ]</a>
+    <a href={material.sourceUrl}>View source <span aria-hidden="true">↗</span></a>
+  </div>
+  <article class="reader" aria-label={material.title}>
+    <p class="reader-path">{material.sourcePath}</p>
+    <div class="prose">
+      {!headings.some((heading) => heading.depth === 1) && <h1>{material.title}</h1>}
+      <Content />
+    </div>
+  </article>
+</Layout>
+
+<script>
+  const diagrams = document.querySelectorAll<HTMLElement>("pre[data-mermaid]");
+
+  if (diagrams.length > 0) {
+    try {
+      const { default: mermaid } = await import("mermaid");
+      mermaid.initialize({
+        startOnLoad: false,
+        securityLevel: "strict",
+        suppressErrorRendering: true,
+        theme: "base",
+        themeVariables: {
+          fontFamily: "IBM Plex Mono, monospace",
+          fontSize: "16px",
+          background: "#000080",
+          primaryColor: "#000080",
+          primaryTextColor: "#ffffff",
+          primaryBorderColor: "#c0c0c0",
+          secondaryColor: "#000080",
+          tertiaryColor: "#000080",
+          lineColor: "#00ffff",
+          textColor: "#ffffff",
+          edgeLabelBackground: "#000080",
+        },
+        flowchart: { htmlLabels: false },
+      });
+
+      for (const [index, source] of Array.from(diagrams).entries()) {
+        try {
+          const { svg } = await mermaid.render(
+            `lab-diagram-${index}`,
+            source.textContent ?? "",
+          );
+          const output = document.createElement("div");
+          output.className = "diagram-output";
+          output.tabIndex = 0;
+          output.setAttribute("role", "region");
+          output.setAttribute("aria-label", "Diagram; scroll to see the full workflow");
+          output.innerHTML = svg;
+          source.replaceWith(output);
+        } catch (error) {
+          console.error("Could not render Mermaid diagram:", error);
+          const message = document.createElement("p");
+          message.className = "diagram-message";
+          message.textContent =
+            "Could not render this diagram. Read the source below or reload the page to retry.";
+          message.setAttribute("role", "status");
+          source.before(message);
+        }
+      }
+    } catch (error) {
+      console.error("Could not load Mermaid:", error);
+      for (const source of diagrams) {
+        const message = document.createElement("p");
+        message.className = "diagram-message";
+        message.textContent =
+          "Could not load diagrams. Read the source below or reload the page to retry.";
+        message.setAttribute("role", "status");
+        source.before(message);
+      }
+    }
+  }
+</script>

@@ -1,0 +1,62 @@
+---
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
+import "../styles/global.css";
+import {
+  discordUrl,
+  repositoryUrl,
+  site,
+  withBase,
+} from "../../site.config.mjs";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Say it, then ship it",
+  description = "An El Camino College ScaleUP workshop (2026). Build with GitHub Copilot and OpenCode, follow the slides, and join the live discussion.",
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#000080" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={withBase("favicon.svg")} />
+    <title>{title === "Say it, then ship it" ? title : `${title} | Say it, then ship it`}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="shell">
+      <header class="site-header">
+        <a class="brand" href={withBase()}>
+          <span class="drive" aria-hidden="true">S:</span>
+          <span>Say it, then ship it</span>
+        </a>
+        <nav aria-label="Main navigation">
+          <a href={withBase("#slides")}>Slides</a>
+          <a href={withBase("#files")}>Lab files</a>
+          <a class="discord-link" href={discordUrl}>Join Discord <span aria-hidden="true">↗</span></a>
+        </nav>
+      </header>
+      <main id="main">
+        <slot />
+      </main>
+      <footer class="site-footer">
+        <a href={repositoryUrl}>Source on GitHub <span aria-hidden="true">↗</span></a>
+        <span>El Camino College ScaleUP workshop (2026)</span>
+      </footer>
+    </div>
+  </body>
+</html>
