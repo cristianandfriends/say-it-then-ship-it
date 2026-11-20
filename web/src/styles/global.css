@@ -93,7 +93,7 @@ nav {
   gap: 24px;
 }
 
-nav a { text-decoration: none; }
+nav a { text-decoration: none; white-space: nowrap; }
 
 .discord-link {
   padding: 5px 12px;
@@ -219,6 +219,9 @@ nav a { text-decoration: none; }
   font-size: 0.8rem;
 }
 
+.material-group { margin-top: 24px; }
+.material-group h3 { color: var(--silver); }
+
 .site-footer {
   display: flex;
   justify-content: space-between;
@@ -276,6 +279,9 @@ nav a { text-decoration: none; }
 
 .prose img { max-width: 100%; height: auto; }
 .prose hr { margin-block: 2em; border: 0; border-top: 1px solid var(--silver); }
+.prose details { padding-left: 16px; border-left: 2px solid var(--silver); }
+.prose summary { width: fit-content; color: var(--cyan); cursor: pointer; }
+.prose details > :not(summary) { margin-top: 12px; }
 .prose table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
 .prose :is(th, td) { padding: 8px 12px; border: 1px solid var(--silver); text-align: left; }
 .diagram { margin-inline: 0; }
@@ -293,7 +299,7 @@ nav a { text-decoration: none; }
 @media (width <= 540px) {
   :root { font-size: 14px; }
   .shell { width: calc(100% - 32px); }
-  nav { gap: 16px; }
+  nav { gap: 12px; }
   .discord-link { padding-inline: 8px; }
   .intro { padding-block: 28px 32px; }
   .file-heading > span { display: none; }

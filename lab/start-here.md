@@ -1,42 +1,53 @@
 ---
 title: Start here
-description: Bring an idea and set up your coding agents.
-order: 1
+description: Choose a project and follow the workshop levels.
+order: 0
 ---
 
 # Start here
 
-Pick something you can build and try during the lab. A useful starting point: a page you wish existed, a small tool, or a fix for a task you repeat.
+Say it, then ship it · El Camino College ScaleUP 2026
 
-## Before the session
+Build a local Python study queue with a coding agent. You can use your own idea if you keep equivalent acceptance checks. Use the ordered levels, hints, and evidence checkpoints as a route map. We collect no passwords and keep no scoreboard. No software gate checks your prose or unlocks the next level.
 
-- Sign in to GitHub and check that you can use [GitHub Copilot](https://github.com/features/copilot).
-- Install [OpenCode](https://opencode.ai/docs/) and connect a model provider you have access to. Check the provider's pricing before you run it.
-- Open a project folder in your editor. Use a throwaway project if you want to experiment.
+## What to bring
 
-Keep credentials and private data out of prompts and commits. Review commands before you let an agent run them.
+- A free [GitHub account and Copilot access](https://github.com/copilot). Check the [education pack](https://education.github.com/pack) if you qualify.
+- Python 3.9 or newer. The facilitator supplies coding-harness access, the workshop folder, and a separate empty student project.
+- One small goal and permission to run code in your student project.
 
-## Say what you want to build
+You need no Git, Node, npm, containers, paid service, or new API account. Core labs use Python's standard library. The workshop's `web/` Node project belongs to maintainers; do not build it.
 
-Describe who will use it and what they should be able to do. Give the agent a way to check its work.
+## Paths and Python
+
+In examples, `workshop` means the supplied workshop folder and `student-project` means your separate project. Replace those paths, including spaces, with your own paths. Quote paths that contain spaces. Run project commands from the student project unless a level says otherwise.
+
+Use `python` for your selected interpreter. On macOS or Linux you might use `python3`; on Windows you might use `py -3`. Check it with `python --version`. Replace `python` in each command with the command that selects your interpreter.
+
+Core levels need no dependency installation. If an extension needs a PyPI dependency, create a venv, then install and run uv inside that venv:
 
 ```text
-Build a page where I can paste meeting notes and copy a checklist.
-
-Keep the notes in the browser. Do not send them to a server.
-Use the project's existing tools.
-
-First, propose a small implementation plan.
-After I approve it, build the page and check that:
-- A blank note produces a useful message.
-- I can copy the checklist.
-- I can use the page with a keyboard.
+python -m venv .venv
+.venv/bin/python -m pip install uv
+.venv/bin/python -m uv pip install --python .venv/bin/python PACKAGE
 ```
 
-Replace this example with your idea. Ask for the smallest version you can use, then add to it.
+Replace `PACKAGE` with the approved dependency. On Windows, replace `.venv/bin/python` with `.venv\Scripts\python.exe`. Use that venv interpreter for project commands after installing dependencies. Do not install into system Python or download another interpreter. Network access beyond PyPI is not part of the exercises; read linked reference pages through facilitator-provided copies if needed.
 
-## During the lab
+## Route
 
-Follow the slides at the top of the site. Use [the Discord chat](https://discord.gg/sMafw3ktj) for questions, screenshots, and links to your work.
+| Level | Work | Evidence to keep |
+| --- | --- | --- |
+| [0: Bootstrap](level-0-bootstrap.md) | Inspect Markdown and install project instructions | Paths and generated files |
+| [1: Brief](level-1-brief.md) | Define one goal and a contract | Approved `BRIEF.md` |
+| [2: Build](level-2-build.md) | Implement `add` and `list` | Commands, tests, checker result |
+| [3: Skill](level-3-skill.md) | Create and reuse a check-work skill | Invocation trace and results |
+| [4: Review](level-4-review.md) | Add `done` and get a second review | Review findings and checks |
+| [5: Context](level-5-context.md) | Hand off to a fresh session | `HANDOFF.md` and extension checks |
+| [6: Tools](level-6-tools.md) | Try a read-only MCP tool | Tool result or safe fallback |
 
-You choose the scope, approve the changes, and decide when to ship.
+Use [Work with two agents](two-agents.md) during review and handoff. Keep prompts, command results, and decisions in your project evidence notes. Review code before running it. Use fixture data, not private records.
+
+The optional checker covers the default CLI at levels 2 and 4. You judge the remaining checkpoints from artifacts and observed runs. Keep failed results with the fix that resolved them.
+
+Next: [Level 0: Bootstrap your project](level-0-bootstrap.md).

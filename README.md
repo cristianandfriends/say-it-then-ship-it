@@ -4,7 +4,21 @@ An El Camino College ScaleUP workshop (2026) for building with GitHub Copilot an
 
 [Live discussion on Discord](https://discord.gg/sMafw3ktj)
 
-## Run the site
+## Start the lab
+
+Follow [the lab guide](lab/start-here.md) through levels 0 to 6. Build a local Python study queue, then practice writing a skill, reviewing with another agent, and handing work to a fresh session. The last level offers a read-only MCP exercise.
+
+Students need Python and access to PyPI. The facilitator provides the coding-agent environment and this workshop folder. Students do not need Node, Git, or the website build tools.
+
+Use [bootstrap-lab](.agents/skills/bootstrap-lab/SKILL.md) to choose Copilot or OpenCode and install the shipped skills, the software-engineering-expert agent, and Python-only project instructions into a separate project.
+
+```sh
+python .agents/skills/bootstrap-lab/scripts/bootstrap_lab.py --harness copilot --target ../my-project
+```
+
+Use `--harness opencode` for OpenCode. Read the proposed setup before running it; the installer preserves unrelated files and refuses conflicting files.
+
+## Maintain the website
 
 Use Node.js 22.23.4 or newer and npm.
 
@@ -42,7 +56,15 @@ Put agents and skills in their native locations. The site reads the same files, 
 
 Use fenced code blocks with a language for syntax highlighting. Use a `mermaid` fence for diagrams. Include `accTitle` and `accDescr` in diagrams for screen-reader context. Readers without JavaScript can read the diagram source.
 
-The reader supports Markdown text, code fences, and Mermaid. It does not interpret Markdown links as site routes or publish adjacent images; use full repository URLs for those resources.
+The reader supports Markdown text, code fences, and Mermaid. It resolves source-relative Markdown links to reader pages, including skill references. Links to scripts and other source files open GitHub. Keep image URLs absolute; the site does not publish adjacent images. The build rejects missing local link targets.
+
+The home page groups ordered lab levels, guides, and the skill and agent entry points. Supporting references remain readable through their links without filling the main directory.
+
+## Check workshop tooling
+
+```sh
+python -m unittest discover -s tests -p "test_*.py"
+```
 
 ## Publish on GitHub Pages
 

@@ -1,20 +1,12 @@
 import { defineCollection } from "astro:content";
 import { z } from "astro/zod";
 import { glob } from "astro/loaders";
+import { materialPatterns } from "../material-paths.mjs";
 
 const materials = defineCollection({
   loader: glob({
     base: "..",
-    pattern: [
-      "lab/**/*.md",
-      ".github/agents/**/*.md",
-      ".github/instructions/**/*.md",
-      ".github/skills/**/*.md",
-      ".agents/skills/**/*.md",
-      ".opencode/**/*.md",
-      "AGENTS.md",
-      ".github/copilot-instructions.md",
-    ],
+    pattern: materialPatterns,
     generateId: ({ entry }) => entry.replace(/\.md$/, ""),
   }),
   schema: z.object({
@@ -22,6 +14,7 @@ const materials = defineCollection({
     name: z.string().optional(),
     description: z.string().optional(),
     order: z.number().default(100),
+    level: z.number().int().min(0).optional(),
   }),
 });
 

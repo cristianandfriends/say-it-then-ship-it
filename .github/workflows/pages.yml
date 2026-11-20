@@ -24,6 +24,8 @@ jobs:
           node-version: 22
           cache: npm
       - uses: actions/configure-pages@v5
+      - name: Check Python lab tooling
+        run: python3 -m unittest discover -s tests -p "test_*.py"
       - run: npm ci
       - run: npm run check
       - run: npm run build

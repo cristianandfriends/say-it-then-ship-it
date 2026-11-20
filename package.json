@@ -9,7 +9,7 @@
     "build": "npm run build --workspace web",
     "check": "npm run check --workspace web",
     "preview": "npm run preview --workspace web --",
-    "test": "playwright test"
+    "test": "node --test tests/material-links.node.mjs && playwright test"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1"

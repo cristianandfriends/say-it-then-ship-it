@@ -1,21 +1,21 @@
 ---
 title: Work with two agents
 description: Give each agent a bounded task and review the handoff.
-order: 2
+order: 20
 ---
 
 # Work with two agents
 
-Use GitHub Copilot and OpenCode in the same project. Start with one agent implementing a small change. Ask the other to review the diff before you accept it.
+Give one agent a bounded implementation task. After it stops, give an independent worker a read-only review. You can use one supplied harness for both roles: Copilot general-purpose or OpenCode general.
 
-Avoid having both agents edit the same files at the same time. For parallel implementation, use separate Git worktrees and review each branch before merging.
+Use this guide with [level 4 review](level-4-review.md) and [level 5 context](level-5-context.md). Keep shared-file edits with one agent at a time. You need no Git worktrees or second harness installation.
 
 ## Keep the loop short
 
 ```mermaid
 flowchart LR
     accTitle: The two-agent workflow
-    accDescr: You describe a task. One agent implements it, the other reviews the diff, and you check the result before shipping or asking for changes.
+    accDescr: You describe a task. One agent implements it, an independent agent reviews the change, and you check the result before accepting it or asking for changes.
     idea["You describe the task"] --> build["Agent A implements"]
     build --> review["Agent B reviews"]
     review --> check["You run it"]
@@ -23,25 +23,18 @@ flowchart LR
     check -->|Ready| ship["You ship"]
 ```
 
-You can swap the agents' roles. Give the reviewer the acceptance criteria and ask for bugs or missing behavior.
+Give the reviewer the brief, acceptance criteria, changed-file scope, and diff or before/after excerpts. Use an independent session if your harness cannot spawn a worker. Mark the review pending until you receive its result.
 
 ```text
-Review the current diff against this goal:
+Review the supplied change against this goal:
 [paste the goal and acceptance criteria]
 
-Do not edit files. Report bugs and missing behavior.
-For each finding, name the file and explain how to reproduce it.
-If you find no issues, say so and name anything you could not check.
+Do not edit files. Report bugs with a file, failing input, and reproduction.
+Include checks you ran and gaps, including if you find no issues.
 ```
 
 ## Give the next agent enough context
 
-Ask the implementing agent to leave a handoff:
+Ask the implementer to write a compact `HANDOFF.md` with decisions, changed files, exact commands/results, constraints, unresolved findings, and one next task. Start a fresh session and have it read the handoff and project instructions before editing.
 
-```text
-Summarize what you changed, the commands you ran, and their results.
-List any unfinished work or assumptions I should check.
-Keep the handoff short enough to paste into another agent.
-```
-
-Run the app and check the behavior yourself. Read the diff, run the project's checks, and commit a working increment before starting the next task.
+Reproduce review findings, fix confirmed bugs, and rerun checks. Run the CLI yourself and compare saved data with its output before accepting the change.

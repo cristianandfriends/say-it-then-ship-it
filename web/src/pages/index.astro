@@ -4,6 +4,30 @@ import { getMaterials, materialInfo } from "../lib/materials";
 import { discordUrl, openSlidesUrl, slidesUrl } from "../../site.config.mjs";
 
 const materials = (await getMaterials()).map(materialInfo);
+const groups = [
+  {
+    title: "Lab levels",
+    files: materials
+      .filter((material) => material.level !== undefined)
+      .sort((a, b) => a.level! - b.level!),
+  },
+  {
+    title: "Guides",
+    files: materials.filter(
+      (material) =>
+        material.sourcePath === "AGENTS.md" ||
+        (material.sourcePath.startsWith("lab/") && material.level === undefined),
+    ),
+  },
+  {
+    title: "Agents and skills",
+    files: materials.filter(
+      (material) =>
+        material.sourcePath.startsWith(".github/agents/") ||
+        material.sourcePath.endsWith("/SKILL.md"),
+    ),
+  },
+].filter((group) => group.files.length > 0);
 ---
 
 <Layout>
@@ -39,19 +63,24 @@ const materials = (await getMaterials()).map(materialInfo);
       <h2 id="files-title">Lab files</h2>
       <span>Read here. Use in your repo.</span>
     </div>
-    <ul class="file-list">
-      {materials.map((material) => (
-        <li>
-          <a class="file-link" href={material.href}>
-            <div class="file-details">
-              <span class="file-path">{material.sourcePath}</span>
-              <span class="file-title">{material.title}</span>
-              {material.description && <span class="file-description">{material.description}</span>}
-            </div>
-            <span class="read-label" aria-hidden="true">[ Read ]</span>
-          </a>
-        </li>
-      ))}
-    </ul>
+    {groups.map((group) => (
+      <section class="material-group" aria-label={group.title}>
+        <h3>{group.title}</h3>
+        <ul class="file-list">
+          {group.files.map((material) => (
+            <li>
+              <a class="file-link" href={material.href}>
+                <div class="file-details">
+                  <span class="file-path">{material.sourcePath}</span>
+                  <span class="file-title">{material.title}</span>
+                  {material.description && <span class="file-description">{material.description}</span>}
+                </div>
+                <span class="read-label" aria-hidden="true">[ Read ]</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
   </section>
 </Layout>
