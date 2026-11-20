@@ -1,6 +1,6 @@
 ---
 title: "Level 1: Write the brief"
-description: Choose your idea and approve a small first version with observable checks.
+description: Choose an idea, describe one feature, and decide how to check it.
 order: 2
 level: 1
 ---
@@ -9,50 +9,55 @@ level: 1
 
 ## Goal
 
-Choose an idea and write an approved `BRIEF.md` before asking for code.
+Choose an idea and write a short plan in `BRIEF.md` before asking for code.
 
 ## Input and task
 
-Use your project instructions from level 0. Describe something you want to make and who would use it. If you have no idea in mind, ask the agent to suggest two based on your interests and choose one.
+Open your student project from level 0. Describe something you want to make and who would use it. If you have no idea, tell the agent about an interest and ask it to suggest two projects you could try.
 
-Scope a first version that you can run in the supplied Python/PyPI environment. If the full idea needs unavailable services or tools, agree on a local prototype and name the work you will defer. Choose an interface that fits the idea; the lab does not require a CLI or a particular storage format.
+Pick **one thing** your first version should do. Ask whether you can build it with Python on your workshop computer. If your full idea needs tools you do not have, choose a smaller version you can try here and list what you will leave for later.
 
-Ask the agent to draft `BRIEF.md`. Use the installed stop-slop skill for its prose. Replace the bracketed fields in this prompt:
+`BRIEF.md` is a Markdown file containing that plan. Use `stop-slop` to help write it in plain language. Paste this into chat, replacing the brackets. In OpenCode, use `@stop-slop`.
 
 ```text
-Read AGENTS.md. I want to build [idea] for [intended user].
-The first useful thing they should be able to do is [behavior].
-
-Draft BRIEF.md with a small first version that fits our environment.
-Ask about decisions that affect scope instead of inventing requirements.
-Include concrete examples, acceptance checks, and a bounded plan.
-Return the brief and open decisions. Do not write application code.
+/stop-slop Help me write BRIEF.md, a short plan for my project.
+Read AGENTS.md. I want to build [idea] for [who will use it].
+The first thing I want them to do is [one action].
+Keep the first version small enough to run on this workshop computer.
+Ask me about choices instead of guessing.
+Include examples I can try, what I should see, and a short build plan.
+Explain unfamiliar terms. Do not write the app yet.
 ```
 
-## Define your project's contract
+## Agree on what to build
 
 Agree on:
 
-- **User and outcome:** who will use it and the result they need.
-- **First behavior:** one action they can perform and the result they can observe.
-- **Examples and checks:** a normal case and a meaningful failure or boundary case, with expected results.
-- **Scope and constraints:** the interface, required inputs, environment limits, and work to leave for later.
+- **Who:** the person you are building for. That person can be you.
+- **First feature:** one thing they can do with your project.
+- **How to try it:** what they type, click, or give it, and what they should see.
+- **Limits:** what this version will leave out.
 
-For each acceptance check, name the starting state, action or input, and expected result. Include the command or manual steps you will use to verify it. For a UI, describe the action and visible outcome; for a function or automation, give sample inputs and expected outputs. Specify data preservation when your project writes data.
+Write one example that should work and one where the person gives it something unexpected. An **acceptance check** is an example you try to decide whether the feature works as agreed.
 
-Ask for a small implementation plan limited to the first behavior. Keep additional features in a deferred-work list. Approve or revise the brief before asking for implementation.
+For example, if you choose a quiz game:
 
-Use your approved brief as the contract for later levels. There is no shared application specification to match.
+- Pick the correct answer to a sample question. You should see "Correct" and earn a point.
+- Leave the answer blank. You should see a request to choose an answer, and your score should stay the same.
+
+Use your own idea for your checks. Write the steps so a classmate could try them. If your app saves information, say what should stay unchanged when someone makes a mistake.
+
+Read `BRIEF.md` and ask the agent to explain anything you cannot follow. Approve the plan or request changes before level 2. Keep extra ideas in a "Later" section.
 
 ## Evidence and checkpoint
 
-Save `BRIEF.md` and your approval. You should be able to explain the first behavior and demonstrate how you will decide whether it works. Keep the expected results and deferred work with the plan.
+Save `BRIEF.md` and your approval in the chat or your notes. Explain the first feature in your own words and show the examples you will use to check it.
 
 <details>
 <summary>Hint</summary>
 
-Replace "it works" with an example someone else can try. Name what they should see or receive, including the result of a failure or boundary case.
+Try saying, "When I do this, I expect to see that." Then ask, "What should happen if I leave something blank?" Choose a mistake that makes sense for your project.
 
 </details>
 
-Previous: [Level 0: Bootstrap your project](level-0-bootstrap.md) · Next: [Level 2: Build the first slice](level-2-build.md)
+Previous: [Level 0: Bootstrap your project](level-0-bootstrap.md) · Next: [Level 2: Build your first feature](level-2-build.md)

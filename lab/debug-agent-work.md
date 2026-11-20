@@ -1,90 +1,95 @@
 ---
 title: Check and debug agent work
-description: Reproduce a mismatch, narrow its cause, and verify a bounded fix.
+description: Show your agent what went wrong and check whether its fix worked.
 order: 22
 ---
 
 # Check and debug agent work
 
-Use this reference when an agent says “done,” a check fails, or a feature
-misses an acceptance criterion. It supports
+Use this guide when an agent says "done" but you have not tried the result,
+or something does not work as you expected. It supports
 [level 2](level-2-build.md) and [level 4](level-4-review.md).
 
 ## Compare a claim with an observation
 
-Review the changed code and dependencies before running them. Use fixture data.
-Pick an acceptance check from your brief and compare its expected result with
-what you observe through the project's intended interface.
+Ask the agent to explain its changes and any new packages before you approve
+running them. Use made-up data. Pick an example from your brief, try it,
+and compare what happened with what you expected.
 
 | Agent's claim | Evidence to inspect |
 | --- | --- |
-| “The tests pass.” | Exact command, working directory, interpreter, and result |
-| “I fixed the bug.” | Original failing input before and after the change |
-| “The feature works.” | Your acceptance example through its intended interface |
-| “Nothing else broke.” | Relevant existing checks and known verification gaps |
+| “The tests pass.” | Which checks ran, in which folder and Python environment, and their results |
+| “I fixed the bug.” | Your original example, tried again after the fix |
+| “The feature works.” | Your own attempt to use the feature |
+| “Nothing else broke.” | Results from trying examples that worked before |
 
-A skipped check remains unchecked. If you cannot run it, name the gap instead
-of counting the agent's confidence as evidence.
+If the agent skipped a check, record that you do not know its result.
+Ask for results, not a confident claim.
 
 ```mermaid
 flowchart TD
-    accTitle: Reproduce and check a bounded fix
-    accDescr: You compare expected and observed behavior, reproduce a mismatch with fixture data, and ask for a scoped diagnosis. An implementer fixes a confirmed cause, then you rerun the reproduction and regression checks.
+    accTitle: Find a problem and check its fix
+    accDescr: You compare what happened with what you expected. If they differ, save the steps and ask for an explanation before approving a fix. Try the original example and earlier checks after the fix.
     compare["Compare expected and observed results"] --> match{"Do they match?"}
-    match -->|Yes| remaining["Check remaining acceptance cases"]
-    match -->|No| reproduce["Keep a small reproduction"]
-    reproduce --> diagnose["Ask for a diagnosis before edits"]
-    diagnose --> fix["Approve a bounded fix"]
-    fix --> rerun["Rerun the reproduction and existing checks"]
+    match -->|Yes| remaining["Try your other examples"]
+    match -->|No| reproduce["Save steps that show the problem"]
+    reproduce --> diagnose["Ask why it happened before edits"]
+    diagnose --> fix["Approve a small fix"]
+    fix --> rerun["Try that example and earlier checks again"]
     rerun --> compare
 ```
 
 ## Keep the failure small
 
-Use the fewest fixture records or actions that still reproduce the mismatch.
-Keep the original expected result. Note whether you can repeat the failure
-from the same starting state.
+Write down the shortest set of steps that shows the problem. Keep the sample
+information you used and copy the error message. Try those steps again to see
+whether the same thing happens.
 
-Separate a setup failure from a behavior failure. An unavailable interpreter
-or missing package does not prove that the feature is wrong. Follow the
+Ask whether the problem comes from setup or from your feature. A missing
+package does not mean the feature's code is wrong. Follow the
 [workshop environment guidance](start-here.md#paths-and-python) if you need a
 dependency; do not install it into system Python.
 
-## Copy this diagnosis prompt
+## Ask what went wrong
+
+Paste this into chat. This is a question for your agent, not a new skill:
 
 ```text
-Role: diagnose this mismatch before changing code.
-Inputs: AGENTS.md, BRIEF.md, changed files, and this reproduction:
-  Starting state and fixture input: [...]
-  Exact command or manual steps: [...]
-  Expected result: [...]
-  Observed result and error text: [...]
-Authority: inspect relevant code and run approved, safe checks;
-do not edit files or change acceptance criteria.
-Output: likely cause, supporting evidence, uncertainties, and a bounded fix.
-Handoff: stop for my approval before implementation.
+Help me understand this problem. Read AGENTS.md and BRIEF.md.
+I started with: [sample information].
+I did: [steps I tried].
+I expected: [result from my brief].
+What happened: [actual result and any error message].
+Read the relevant code and run approved checks, but do not edit files yet.
+Explain what you think caused it and what evidence supports that explanation.
+Suggest a small fix and wait for my approval.
 ```
 
-Share relevant error text and synthetic inputs. Remove credentials and private
-records before giving them to an agent.
+Use made-up examples. Remove passwords, access keys, and private information
+from error messages before sharing them.
 
 ## Optional example: a duplicate result
 
-Suppose a “find matching records” action returns the same fixture record twice.
-Reduce the input to one matching record. Note whether duplicates appear in the
-underlying result or only in the interface.
+Suppose your project searches a list and shows the same item twice.
+Try a sample list with one item that should match. Save what the project
+shows you.
 
-Ask the agent to trace that record through the relevant code. Approve a fix
-after it identifies evidence for the cause. The implementer should add a check
-that catches the duplicate and preserve valid multiple matches.
+Ask the agent to follow that item through the code and explain where the
+duplicate comes from. Approve a fix after you understand its explanation.
+Ask it to add a test that would catch the same problem next time.
 
 ## Close the loop yourself
 
-After the fix, rerun the original reproduction and the relevant existing
-checks. Try the user action too; a unit test may not cover the interface.
-Reuse your [check-work skill](level-3-skill.md) for the project's procedure.
+After the fix, try your original steps again. Ask the agent to rerun earlier
+checks too. Once you have made [check-work in level 3](level-3-skill.md), use it
+by name. In OpenCode, use `@check-work`:
 
-For an independent review, use a worker who did not implement this change.
-Give them read-only authority and the before/after evidence described in
-[Work with two agents](two-agents.md). A diagnosis from the implementer does
-not count as that independent review. You decide whether to accept the change.
+```text
+/check-work Check the fix for [the problem].
+Run the check for our original failing example and the earlier checks.
+Report what passed, failed, or could not be checked. Do not change files.
+```
+
+For a second opinion, ask a different worker to review the change without
+editing it. [Work with two agents](two-agents.md) shows what to give that
+reviewer. You decide whether to accept the fix.

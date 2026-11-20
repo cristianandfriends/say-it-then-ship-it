@@ -1,6 +1,6 @@
 ---
 title: "Level 6: Try a read-only MCP tool"
-description: Expose one read-only project operation as a tool, or record a safe fallback.
+description: "Bonus: let your agent use one safe project feature as a tool."
 order: 7
 level: 6
 ---
@@ -9,58 +9,99 @@ level: 6
 
 ## Goal
 
-Expose one read-only operation from your project through MCP and verify a tool result. This level is an optional bonus.
+Let your agent call one project feature as a tool and check the result. This level is an optional bonus.
 
 ## Input and task
 
-MCP, the Model Context Protocol, gives a harness a standard way to discover and invoke external tools. A skill supplies instructions; an MCP server supplies callable tools. You will build one local Python tool, with no new service or API account.
+A **skill** tells your agent how to do a task. A **tool** lets it ask a program to do something and return a result. **MCP**, the Model Context Protocol, is one way to connect those programs to a coding agent.
 
-Check `python --version` first. The core labs support Python 3.9. The PyPI `mcp` package requires Python 3.10 or newer in current releases; check the package's supported version before installing. If your interpreter cannot run it, skip installation and use the fallback below. Do not download another interpreter.
+Choose one small part of your idea that can read or calculate something without changing anything. For example, a tool could count the words in sample text. Use made-up data and a result you can check yourself.
 
-For a supported interpreter, create a venv in the student project and install uv inside it if unavailable:
+Agree on what you will give the tool, what it should return, and what should happen if you give it something invalid. Add those examples to your brief.
+
+## Ask the setup skill for the package
+
+The other levels support Python 3.9. Current versions of the `mcp` package need Python 3.10 or newer. Ask the skill to check compatibility before installing it. Paste this into chat; use `@bootstrap-lab` in OpenCode:
 
 ```text
-python -m venv .venv
-.venv/bin/python -m pip install uv
-.venv/bin/python -m uv pip install --python .venv/bin/python "mcp[cli]"
+/bootstrap-lab Prepare this project's environment for the mcp[cli] package.
+Check whether the package supports the Python on this computer.
+Explain the plan and ask before installing anything.
+Reuse our project environment. Keep packages inside a virtual environment.
+Use PyPI and do not download another Python version.
+If setup cannot work here, stop and explain why.
 ```
 
-On Windows, use `.venv\Scripts\python.exe` in place of `.venv/bin/python`. Keep dependencies inside the venv. Use `FastMCP` from `mcp.server.fastmcp`; do not install a separate FastMCP package for this exercise. If package compatibility or PyPI access blocks setup, use the fallback.
+If setup fails or Python is too old, go to **Required safe fallback** below. You can finish that route without installing MCP.
 
-Choose one operation that fits your idea, such as validating sample input or computing a preview. Define its name, allowed inputs, expected output, and a failure case in your brief. Use synthetic input or a disposable fixture with a result you can check.
+## Build one read-only tool
 
-Ask your agent for a small server that exposes that operation as one tool, with focused tests. Require:
+A **server** is the program that offers the tool to your agent. **Read-only** means the tool must not change files or saved information. Ask the engineering agent to build it with this prompt. Replace the brackets; the technical lines tell the agent how to keep the connection local:
 
-- A narrow input contract. If it reads a file, use a fixed disposable fixture path anchored to the student project; do not accept arbitrary paths.
-- No writes, shell commands, network calls, or credentials. Keep private data out of the exercise.
-- A structured result you can compare with the expected output in your brief. Invalid input must produce an explicit error without changing state.
-- Stdio transport. Keep stdout for MCP messages; send diagnostics to stderr. Do not add stdout debug prints.
+```text
+Use software-engineering-expert to build one local MCP tool for [project action].
+Read AGENTS.md and the examples in BRIEF.md. Write tests before the code.
+Use FastMCP from mcp.server.fastmcp, from the mcp[cli] package.
+Allow only the agreed inputs. Return a clear error for invalid input.
+The tool must not write files, run commands, make network calls, or use credentials.
+If the tool reads a file, allow only a fixed sample file in this project.
+Use stdio transport; reserve stdout for MCP and send diagnostics to stderr.
+Explain how I can check the result. Ask before starting the server.
+```
 
-Review the code and tests before launch. Test the operation and its failure case with your known input.
+Ask the agent to explain what the server will do before you approve running it. The restrictions above apply to the tool; its setup and tests may create project files with your approval.
 
-Use the harness's current documentation to configure a local stdio server with the absolute venv interpreter path and server path:
+```text
+/check-work Test the tool's normal example and invalid example.
+Compare the results with BRIEF.md and check that no saved data changes.
+Do not start the MCP server yet.
+```
+
+Use `@check-work` in OpenCode.
+
+## Connect and try it
+
+Ask your facilitator to help connect your coding app to the local server. Give them the Python environment and server file locations your agent reports. The two apps use different connection settings:
 
 - [OpenCode MCP servers](https://opencode.ai/docs/mcp-servers/)
 - [GitHub Copilot MCP documentation](https://docs.github.com/en/copilot/how-tos/copilot-in-your-ide/customize-copilot/extend-copilot-with-tools-and-context/extend-copilot-chat-with-mcp)
 
-Use facilitator-provided copies if you cannot reach the docs. Copilot surfaces and OpenCode use different configuration locations and fields. Do not guess a shared JSON configuration. Keep the tool local; do not enable unrelated servers or credentials.
+Your facilitator can supply copies of these pages. Ask the agent to follow the instructions for your app, show its proposed settings, and wait for approval. Keep the connection local and leave unrelated tools disabled.
 
-Ask the connected harness to list tools, select your tool, and invoke it with the agreed input. Compare the actual structured result with your expected result. Confirm that the tool changed no state, including fixture bytes if it reads files. Stop the server through your harness when you finish.
+Once connected, paste this request into chat:
+
+```text
+List the connected tools and find [my tool's name].
+Call it with [the example from my brief].
+Show the result and compare it with what we expected.
+Check that it did not change our sample files or saved information.
+```
+
+Compare the tool's result yourself. Stop the server through your coding app when you finish; ask your facilitator if you cannot find that control.
+
+## Required safe fallback
+
+If you cannot install MCP or connect the tool, ask the agent to run the same calculation or check in Python without MCP. It should use the examples from your brief and show the results. Keep the same read-only restrictions.
+
+If you have not built that Python code, ask the engineering agent to write and test it first, without installing MCP. Then use your checking skill:
+
+```text
+/check-work Check our tool's behavior in Python without MCP.
+Use the examples in BRIEF.md and show the actual results.
+Confirm that the operation changes no saved data.
+Explain that we have not demonstrated an MCP connection.
+```
+
+Use `@check-work` in OpenCode. Save **"MCP connection not demonstrated"** and the reason. A working Python calculation completes this fallback; it does not prove that the agent connected to an MCP tool.
 
 ## Evidence and checkpoint
 
-Keep interpreter/package versions, server path, input or fixture, expected result, tests/results, tool listing, invocation arguments, and actual result. Record connection errors as errors, not successful tool calls.
-
-### Required safe fallback
-
-If the interpreter, provider, or harness cannot connect, do not add a service. Run the same read-only operation as a local Python function using the agreed input. Compare its result with your expected output and confirm that it changed no state. Record the command and actual result, plus "MCP connection not demonstrated" and the reason. This completes the fallback; a local function call does not prove an MCP connection.
-
-Ask your facilitator to inspect the evidence against your project's agreed tool contract.
+Keep the setup report, your examples, expected and actual results, and check report. If you connected MCP, save the tool listing and its call result. If you used the fallback, save the reason and the Python result. Ask your facilitator to look at what you demonstrated.
 
 <details>
 <summary>Hint</summary>
 
-Separate the project operation from the MCP wrapper. Test its normal and error results without starting a server, then reuse that function for the fallback.
+Ask the agent to keep the calculation separate from the MCP connection code. That lets you check the calculation even if you cannot connect the tool.
 
 </details>
 

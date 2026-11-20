@@ -1,89 +1,90 @@
 ---
 title: Turn an idea into a check
-description: Choose one useful action and name the result you can observe.
+description: Pick one thing your idea should do and an example you can try.
 order: 21
 ---
 
 # Turn an idea into a check
 
-Use this reference when your idea sounds useful but you cannot tell an
-agent what success looks like. It supports [level 1](level-1-brief.md);
-you do not need another planning document.
+Use this guide with [level 1](level-1-brief.md) when you have an idea but do
+not know what to ask the agent to build first. Add your choices to `BRIEF.md`;
+you do not need another plan.
 
 ## Find the action you can try
 
-Describe one person using the first version. Name what they provide, what they
-do, and what they should see or receive. Choose an interface that suits your
-idea: a function, local page, file operation, or another Python-based interface.
+Picture one person using your project. What would they type, click, or give it?
+What should they see when they do that? You can choose how someone uses your
+project; ask the agent to explain which options fit the workshop computer.
 
-Replace broad goals such as “make it easy to organize things” with a check:
-“Given this starting state, after this action, I can observe this result.”
-If you cannot name the result, ask the agent to propose two smaller behaviors
-and choose one yourself.
+Replace "make it easy to organize things" with one example someone could try.
+Describe what they start with, what they do, and what should happen.
+If you cannot choose a first feature, ask the agent for two smaller options.
 
 ```mermaid
 flowchart TD
     accTitle: Choose a behavior you can check
-    accDescr: You choose a user action, name its observable result, and check whether you can try it in the workshop environment. You shrink the scope if needed, then approve examples before implementation.
+    accDescr: You choose one action and its expected result. If you cannot try it on the workshop computer, choose a smaller action. Approve your examples before asking for code.
     idea["You describe an idea"] --> action["Choose one user action"]
     action --> result["Name the observable result"]
     result --> check{"Can you try it here?"}
-    check -->|No| shrink["Defer a dependency or shrink the action"]
+    check -->|No| shrink["Choose a smaller first feature"]
     shrink --> action
-    check -->|Yes| examples["Choose normal and boundary examples"]
-    examples --> approve["You approve the scope"]
+    check -->|Yes| examples["Try a normal example and a mistake"]
+    examples --> approve["You approve the plan"]
 ```
 
 ## Separate a requirement from a guess
 
-Before approving the first behavior, resolve choices that change its result:
+Ask these questions before approving the plan:
 
 | Choice | Question to settle |
 | --- | --- |
-| Input | What does the user supply, and what counts as invalid? |
-| Output | What can the user inspect to tell that the action succeeded? |
-| State | What should change, and what must survive a failed action? |
-| Boundary | What should happen with an empty, missing, or repeated input? |
+| What the person gives it | What will they type, click, or provide? |
+| What they get back | What should they see or receive? |
+| What gets saved | What should change, and what must stay safe if something goes wrong? |
+| A mistake to try | What should happen if they leave something blank or repeat an action? |
 
-Pick a boundary that matters to your idea. You do not need cases for each row
-before you can begin.
+Choose one mistake that matters to your idea. Ask the agent what it should do
+when that mistake happens, then decide whether you agree.
 
-## Copy this scope prompt
+## Ask for a small first version
+
+Paste this into chat. In OpenCode, use `@stop-slop`:
 
 ```text
-Role: help me scope one behavior; do not implement it.
-Inputs: AGENTS.md and this idea: [idea and intended user].
-Authority: propose choices; I approve scope and acceptance criteria.
-Output: one action, starting state, input, observable result, and
-one meaningful failure or boundary case. Name what must remain unchanged.
-Fit Python 3.9+ and the workshop's Python/PyPI environment.
-Handoff: list unresolved choices and deferred work, then stop for approval.
+/stop-slop Help me plan one feature for [idea and who will use it].
+Read AGENTS.md. Keep the plan inside our workshop's Python setup.
+Describe what someone starts with, what they do, and what they should see.
+Add one mistake they could make and what should happen.
+Say what information must stay safe if that action fails.
+Explain choices I need to make and leave extra features for later.
+Add the plan to BRIEF.md and wait for my approval. Do not write code yet.
 ```
 
-Ask the agent to explain how you could check each expected result. A test name
-without an input and expected outcome leaves you guessing.
+Ask the agent to explain how you could try each example. You should be able
+to tell a classmate what to do and what result to look for.
 
 ## Optional example: group some notes
 
-Suppose your idea helps someone group short notes. You could choose this slice:
+If you choose an idea for grouping notes, your first feature could be:
 
-- Start with two fixture notes: “buy tea” and “call Sam.”
+- Start with two made-up notes: “buy tea” and “call Sam.”
 - Assign the label “errands” to “buy tea.”
 - Check that the selected note has that label and “call Sam” stays unchanged.
 - Try assigning a label to a missing note. Expect a clear failure and no change
   to the existing notes.
 
-You could expose this behavior through a function or an interface you choose.
-Search, accounts, and synchronization can wait. Use synthetic notes while you
-work out the behavior.
+Ask the agent how you could try that action on your workshop computer.
+Search and accounts can go on your "Later" list. Use made-up notes while
+you build and check the feature.
 
-## Cut scope without moving the goal
+## Keep the first version small
 
-If the slice needs an unavailable service, choose a local fixture or prototype
-and name what it cannot prove. Do not describe a fixture-backed prototype as a
-working integration.
+If your full idea needs a service you cannot use here, ask for a version that
+uses made-up data on this computer. Write down what it cannot do. A demo using
+sample data does not show that you connected to the real service.
 
-Approve changes to the expected behavior before the agent changes code or
-tests to match them. Carry the chosen examples into
-[level 2](level-2-build.md). Use [Check and debug agent work](debug-agent-work.md)
-when the observed result differs from the one you approved.
+Approve any change to the plan before the agent writes code for it.
+Carry your examples into [level 2](level-2-build.md). Use
+[Check and debug agent work](debug-agent-work.md) if the result differs
+from what you expected.

@@ -1,92 +1,108 @@
 ---
 title: Choose a skill or an agent role
-description: Separate reusable procedures from a worker's authority and task.
+description: Choose instructions for a repeated task or a job for another worker.
 order: 24
 ---
 
 # Choose a skill or an agent role
 
-Use this reference when you need repeatable steps, a focused worker, or a
-second opinion. It supports [level 3](level-3-skill.md) and
-[level 4](level-4-review.md).
+Use this guide with [level 3](level-3-skill.md) and [level 4](level-4-review.md).
+A **skill** is a set of instructions you can reuse. An **agent role** gives
+a worker a job and limits on what it may do.
 
 ## Choose what you need
 
 | Need | Use |
 | --- | --- |
-| Repeat the same check procedure | A skill with steps and resources |
-| Give a worker a bounded responsibility | A role with authority and handoff limits |
-| Ask for one small change | A task prompt using the existing role and skills |
-| Get an independent review | A separate worker who did not implement the change |
+| Repeat the same checks | A skill with the steps written down |
+| Put a worker in charge of one job | An agent role with clear limits |
+| Ask for one small change | A chat request; you may not need a new skill or role |
+| Get a second opinion | A different worker who did not write the change |
 
-You can ask an implementer and a reviewer to use the same check-work skill.
-Give each worker its own authority: an implementation role may edit approved
-files; a read-only reviewer may report findings but must not implement fixes
-for that change.
+Two workers can use the same skill but have different jobs. The coding worker
+may edit approved files. A read-only reviewer may check the work and report
+problems, but must leave the files unchanged.
 
 ```mermaid
 flowchart TD
-    accTitle: Choose procedures and worker authority
-    accDescr: You identify whether you need a reusable procedure, a bounded worker, or both. You put procedure details in a skill and authority in a role, then name their inputs, outputs, and handoff in a task prompt.
+    accTitle: Choose a skill and an agent job
+    accDescr: Decide whether you need steps you can reuse. Put those steps in a skill, choose what the worker may do, and give it the files, expected result, and stopping point.
     need["Describe the help you need"] --> procedure{"Repeatable procedure?"}
     procedure -->|Yes| skill["Use or write a skill"]
-    procedure -->|No| task["Keep steps in the bounded task"]
-    skill --> role["Choose worker authority"]
+    procedure -->|No| task["Ask for one task in chat"]
+    skill --> role["Choose what the worker may do"]
     task --> role
-    role --> prompt["Name inputs, outputs, and handoff"]
-    prompt --> execute["Invoke the worker and inspect its execution"]
+    role --> prompt["Name files, expected result, and stopping point"]
+    prompt --> execute["Start the worker and check what it did"]
 ```
 
 ## Start with the workshop examples
 
-- Use [bootstrap-lab](../.agents/skills/bootstrap-lab/SKILL.md) for setup and
-  planning procedures.
-- Use [stop-slop](../.agents/skills/stop-slop/SKILL.md) for prose.
+- Use [bootstrap-lab](../.agents/skills/bootstrap-lab/SKILL.md) to set up your
+  project or its Python environment.
+- Use [stop-slop](../.agents/skills/stop-slop/SKILL.md) to write plain language.
 - Use [frontend-design](../.agents/skills/frontend-design/SKILL.md) if your idea
-  includes a UI. Keep its implementation within the workshop's Python/PyPI
-  environment; a design skill does not require a Node project.
+  has a screen or page people will use. Ask for a design your Python project
+  can run; this skill does not require Node.
 - Consult the [Copilot engineering role](../.github/agents/software-engineering-expert.agent.md)
   or [OpenCode engineering role](../.opencode/agents/software-engineering-expert.md)
-  for contribution and review boundaries.
+  for coding and review jobs.
 
-Use the installed copy for your harness, following
-[level 0](level-0-bootstrap.md). Keep reusable execution steps in skills rather
-than pasting them into each role.
+Use the copies installed in [level 0](level-0-bootstrap.md). Keep repeated
+steps in skills instead of copying them into each agent role.
 
-## Copy this focused task prompt
+## Name the skill in your request
+
+Paste these examples into agent chat. In OpenCode, replace `/stop-slop`
+with `@stop-slop` and `/frontend-design` with `@frontend-design`.
 
 ```text
-Role: [implementer / independent read-only reviewer].
-Authority: [allowed edits and checks]; ask before [restricted actions].
-Inputs: AGENTS.md, BRIEF.md, [task evidence and file scope].
-Skill: invoke [skill name/path] for [procedure].
-Output: [change or findings], exact checks/results, and verification gaps.
-Handoff: stop after [bounded task]; [person/worker] handles [next action].
-Do not expand scope or change acceptance criteria without my approval.
+/stop-slop Write a short README for my project using BRIEF.md.
+Explain what someone can do with it and how to try it.
+Do not add features or change code.
 ```
 
-Name concrete boundaries. “Be an expert” gives the worker no file scope,
-permission limit, or stopping point.
+```text
+/frontend-design Plan a screen for [the feature in my brief].
+Read AGENTS.md and BRIEF.md. Keep it within our Python setup.
+Show a layout and explain what someone would click or type.
+Wait for my approval before writing code.
+```
 
-## Optional example: check and review one fix
+## Give an agent a clear job
 
-You might ask the engineering role to fix one approved input-validation bug,
-use check-work, and report its changed files. After implementation stops, give
-a fresh worker the brief, changed files, before/after evidence, and results.
+Tell the worker what job it has, which files to read, what it may change,
+what result to return, and when to stop. "Be an expert" leaves those choices open.
 
-Give that reviewer read-only authority. Ask for failing inputs and
-reproduction steps, then return confirmed bugs to the implementer.
-[Work with two agents](two-agents.md) describes that sequence. You approve the
-fix and verify its behavior before accepting it.
+For example:
 
-## Check that the worker used the procedure
+```text
+Use software-engineering-expert to fix [one problem] from BRIEF.md.
+Read AGENTS.md. Leave unrelated features alone.
+Explain the cause and planned change before editing.
+After I approve, write a failing test, fix the problem, and run the checks.
+Ask a different worker to review without editing.
+Return the changed files, results, and review.
+```
 
-A role label does not launch a worker, and a skill name does not prove execution.
-Use your harness's supported controls and inspect the response or tool trace.
-If skill discovery fails, provide its exact installed path and ask the worker
-to read and follow it. Check the reported steps and results.
+After the change, use the skill you created in level 3. Use `@check-work`
+in OpenCode:
 
-If your harness cannot spawn a worker, start an independent session for review
-and supply the same bounded inputs. Mark the review pending until you receive
-its findings. Use [Start a fresh session with a handoff](handoff-fresh-session.md)
-to transfer context without pasting the whole conversation.
+```text
+/check-work Check the fix and the examples that worked before.
+Report results without changing files.
+```
+
+## Check what happened
+
+Look in the chat's activity for the worker starting, the skill loading,
+and the checks running. Ask your facilitator to help you find that activity.
+An agent saying it used a worker or skill does not prove those steps happened.
+
+If a skill is missing, give its installed `SKILL.md` path and ask the agent to
+read it. If you cannot start a second worker, use a separate chat for review.
+Record "review pending" until you receive the review.
+
+[Work with two agents](two-agents.md) shows the review steps.
+Use [Start a fresh session with a handoff](handoff-fresh-session.md)
+to transfer the project without pasting the whole old conversation.

@@ -1,6 +1,6 @@
 ---
 title: "Level 5: Hand off the context"
-description: Use a compact handoff to extend the project in a fresh session.
+description: Write a note that helps you continue your project in a new chat.
 order: 6
 level: 5
 ---
@@ -9,35 +9,64 @@ level: 5
 
 ## Goal
 
-Give a fresh session enough evidence to implement one bounded extension.
+Start a new chat and continue your project using a short handoff note.
 
 ## Input and task
 
-Use your working project, brief, skill, review, and check results. A model has a finite context window. Long sessions can crowd out instructions or make the agent miss earlier decisions, a failure pattern people call context rot. Keep durable facts in project files rather than trust the chat history.
+Use your working project from level 4. An agent can keep a limited amount of text in view at once. That limit is its **context window**. In a long chat, it may miss earlier instructions or decisions.
 
-Ask the current agent to write a compact `HANDOFF.md` with:
+Save important facts in project files so a new chat can read them. A **handoff** is a note explaining what works, what you decided, and what to do next.
 
-- The goal, current behavior, decisions, and the files that justify them.
-- Interpreter, working directory, exact check commands, results, and unresolved review findings.
-- Constraints: Python/PyPI setup, the project's interface and data contracts, and behavior the next change must preserve.
-- One next task, its acceptance criteria, and work to leave out.
+Choose one remaining task from your brief. Agree on an example that should work, an example with a mistake, and the result you expect for each.
 
-Choose one remaining task from your project's brief. Define its expected result and a failure or boundary case before coding. Include the existing checks the new session must rerun, and leave unrelated work out of scope.
+Ask the current agent to write the note. Paste this into chat; use `@stop-slop` in OpenCode:
 
-Start a fresh harness session in the student project. Do not paste the whole old conversation. Ask it to read `AGENTS.md`, `BRIEF.md`, `HANDOFF.md`, and `check-work`, restate the next task, and identify any missing evidence before changing code.
+```text
+/stop-slop Write HANDOFF.md so I can continue in a new chat.
+Include what works, important decisions, and the files to read.
+Record our Python environment, how to run the project, and the latest checks.
+Include failed or skipped checks and any review problems we have not fixed.
+The next task is [one task from BRIEF.md].
+Include our examples, expected results, and what must keep working.
+Keep the note short and link to longer files. Do not change the app.
+```
 
-Use your harness's documented new-session or compaction controls. Slash commands differ between harnesses. Compaction produces a smaller account of a conversation; inspect it for lost decisions. A fresh session plus a checked handoff gives you a separate test of what the next worker can recover.
+Read the note. Check its claims against the files and results you saved. Correct mistakes before using it.
 
-Let the fresh agent implement the approved task and its focused tests. Reuse the check-work skill, try the new behavior through your project's interface, and rerun the existing acceptance checks for regression evidence. See [Work with two agents](two-agents.md) for a handoff prompt.
+## Continue in a new chat
+
+Use your app's new-chat control while keeping the student project open. Ask your facilitator where to find it. Asking the old chat to "start fresh" does not open a new chat.
+
+Paste this into the new chat:
+
+```text
+Read AGENTS.md, BRIEF.md, and HANDOFF.md.
+Explain what the project does and the one task I want to do next.
+Tell me what should happen in our examples and what must stay unchanged.
+List anything missing or unclear. Do not change files until I approve.
+```
+
+Compare its answer with your plan. If it missed a fact, add that fact to `HANDOFF.md` and ask the new agent to read the corrected file.
+
+Approve the task once the new agent understands it. Ask it to use the engineering agent and TDD steps from level 4. After the change, use your skill:
+
+```text
+/check-work Check the new feature and the examples that worked before.
+Report the results and anything you could not check.
+```
+
+Use `@check-work` in OpenCode. Try the feature yourself too.
+
+Some apps offer **compaction**, which shortens a long chat into a summary. Read that summary for missing decisions. In this level, use a new chat and your checked handoff note to see whether another agent can pick up the work.
 
 ## Evidence and checkpoint
 
-Keep `HANDOFF.md`, the fresh session's task restatement, files it read, implementation changes, and exact extension commands/results. Include the regression check output. Correct a missing handoff fact in the file, then show that the fresh session can use it. Do not claim success from a summary alone.
+Save `HANDOFF.md`, the new chat's explanation of the task, and the change it made. Keep the new check report and your own results from trying the feature. A correct summary does not prove that the new code works.
 
 <details>
 <summary>Hint</summary>
 
-A useful handoff might fit on one screen. Link to longer fixtures or the brief instead of copying them. Include a failed or skipped command if it affects the next task.
+Think of the note as what you would leave a classmate who takes over tomorrow. Name the next action and where to find the files they need.
 
 </details>
 

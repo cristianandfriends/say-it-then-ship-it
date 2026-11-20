@@ -1,6 +1,6 @@
 ---
 title: Start here
-description: Choose a project and follow the workshop levels.
+description: Learn how to ask your agent for help, then build your own idea.
 order: 0
 ---
 
@@ -8,51 +8,71 @@ order: 0
 
 Say it, then ship it · El Camino College ScaleUP 2026
 
-Bring an idea you want to build with a coding agent. Set up your workspace in level 0, then choose the idea and scope its first version in level 1. Carry your project through the remaining levels. You choose its interface, behavior, and acceptance checks within the workshop's Python/PyPI environment.
+Build something you want to use. You need no programming experience. Set up your project folder in level 0, then choose your idea in level 1. Keep working on that idea through the remaining levels.
 
-Use the ordered levels, hints, and evidence checkpoints as a route map. You demonstrate progress with working behavior, check results, and review handoffs. The workshop prescribes no application or data format.
+Your coding agent can write code and explain it. You decide what to build and check what it does. At the end of each level, save the files and results listed under **Evidence and checkpoint** so you can show your progress.
 
 ## What to bring
 
-- A free [GitHub account and Copilot access](https://github.com/copilot). Check the [education pack](https://education.github.com/pack) if you qualify.
-- Python 3.9 or newer. The facilitator supplies coding-harness access, the workshop folder, and a separate empty student project.
-- Permission to run code in your student project. You can choose your idea in level 1.
+- Access to GitHub Copilot or OpenCode, arranged with your facilitator. For Copilot, you need a [GitHub account](https://github.com/copilot); you may qualify for the [education pack](https://education.github.com/pack).
+- Python 3.9 or newer. Ask your facilitator to help you check it.
+- The workshop folder and a separate empty project folder, supplied by your facilitator.
 
-You need no Git, Node, npm, containers, paid service, or new API account. Use Python's standard library and approved PyPI packages for your project. The workshop's `web/` Node project belongs to maintainers; do not build it.
+Your project will use Python and, if needed, packages from PyPI, the Python package directory. Choose a first version that runs on your workshop computer. You do not need to install Git, Node, or the workshop website, or sign up for another service.
+
+## Talk to your agent
+
+Paste the prompt examples into your **agent's chat**, not into a terminal. A terminal runs computer commands; your agent can run those commands after you approve them. Replace text in `[square brackets]` with your own details.
+
+A **skill** is a named set of instructions your agent can follow. For example, `stop-slop` helps it write plain language. The prompt examples use Copilot's `/skill-name` form. OpenCode uses `@skill-name`:
+
+| App | Example to paste into chat |
+| --- | --- |
+| Copilot | `/stop-slop Write a short description of my idea.` |
+| OpenCode | `@stop-slop Write a short description of my idea.` |
+
+Make the same change for `/bootstrap-lab`, `/frontend-design`, and `/check-work`. You create `check-work` in level 3; it will not exist before then. If your app cannot find a skill, ask the agent to read its `SKILL.md` file and follow the instructions. Level 0 shows where those files live.
+
+An **agent role** gives a worker a job, such as writing code or reviewing it. A skill gives that worker steps to follow. Your facilitator may call Copilot or OpenCode a **harness**: the app that lets the agent read files and use tools.
+
+Ask your agent to explain unfamiliar words before you approve a change.
 
 ## Paths and Python
 
-In examples, `workshop` means the supplied workshop folder and `student-project` means your separate project. Replace those paths, including spaces, with your own paths. Quote paths that contain spaces. Run project commands from the student project unless a level says otherwise.
+In examples, `workshop` means the supplied workshop folder and `student-project` means your own project folder. A **path** is a folder or file's location on your computer. Ask your facilitator for these two paths, then give them to your agent. Keep your project outside the workshop folder.
 
-Use `python` for your selected interpreter. On macOS or Linux you might use `python3`; on Windows you might use `py -3`. Check it with `python --version`. Replace `python` in each command with the command that selects your interpreter.
+A **virtual environment**, often named `.venv`, keeps one project's added Python packages separate from other projects. `uv` is the package tool your agent will use. You do not need to memorize its commands.
 
-You need no packages or virtual environment to install the starter material in level 0. The copied project `AGENTS.md` requires `uv` and virtual environments when you add dependencies. Use [Prepare Python dependencies](../.agents/skills/bootstrap-lab/SKILL.md#prepare-python-dependencies) in `bootstrap-lab` for the setup steps:
+Level 0 copies starter files without installing packages. If your project needs an extra package, use [Prepare Python dependencies](../.agents/skills/bootstrap-lab/SKILL.md#prepare-python-dependencies) in `bootstrap-lab`. A **dependency** is a package your project needs to run. Paste this into chat, using `@bootstrap-lab` in OpenCode:
 
 ```text
-Use bootstrap-lab to prepare a Python environment for [dependency].
-Follow my project's AGENTS.md and the skill's Prepare Python dependencies steps.
-Show the plan and ask before installing tools or packages.
-Use my installed Python and PyPI. Do not download another interpreter.
+/bootstrap-lab Prepare a Python environment for [package my project needs].
+Read my project's AGENTS.md and follow Prepare Python dependencies.
+Explain what you will install and ask for approval first.
+Use the Python already on this computer and packages from PyPI.
+Do not install into system Python or download another Python version.
 ```
 
-Replace `[dependency]` with a package your project needs. Ask the agent to report the project interpreter path and use it for project commands. Keep the policy in `AGENTS.md` and the provisioning procedure in `bootstrap-lab`; you do not need another starter skill for this step.
+If you do not know which package you need, ask the agent to explain its proposal before using this prompt. Ask it to show which Python environment it used. Your copied `AGENTS.md` contains the rules; `bootstrap-lab` contains the setup steps.
 
-Do not install into system Python. Network access beyond PyPI is not part of the exercises; read linked reference pages through facilitator-provided copies if needed.
+Some computers use `python3` or `py -3` instead of `python`. Let your agent check which command works. If setup fails, keep the error and ask your facilitator for help. Do not approve a system-wide installation to get past it.
+
+Your project does not need network access beyond PyPI. Your facilitator can provide copies of linked reference pages.
 
 ## Route
 
 | Level | Work | Evidence to keep |
 | --- | --- | --- |
-| [0: Bootstrap](level-0-bootstrap.md) | Inspect Markdown and install project instructions | Paths and generated files |
-| [1: Brief](level-1-brief.md) | Choose your idea and define its first behavior | Approved `BRIEF.md` |
-| [2: Build](level-2-build.md) | Build and try that behavior | Acceptance checks and observed results |
-| [3: Skill](level-3-skill.md) | Create and reuse a check-work skill | Invocation trace and results |
-| [4: Review](level-4-review.md) | Make one improvement and get a second review | Review findings and checks |
-| [5: Context](level-5-context.md) | Hand off to a fresh session | `HANDOFF.md` and extension checks |
-| [6: Tools](level-6-tools.md) | Try a read-only MCP tool | Tool result or safe fallback |
+| [0: Bootstrap](level-0-bootstrap.md) | Set up your project with a skill | Folder locations and copied files |
+| [1: Brief](level-1-brief.md) | Choose your idea and one thing it should do | Your approved `BRIEF.md` plan |
+| [2: Build](level-2-build.md) | Build and try that first feature | Expected and actual results |
+| [3: Skill](level-3-skill.md) | Make a skill that checks your project | Skill file and two check reports |
+| [4: Review](level-4-review.md) | Improve one thing and get a second opinion | Review, fixes, and check results |
+| [5: Context](level-5-context.md) | Continue your project in a new chat | `HANDOFF.md` and a working change |
+| [6: Tools](level-6-tools.md) | Bonus: give your agent a read-only tool | Tool result or local-only result |
 
-Use [Work with two agents](two-agents.md) during review and handoff. Keep prompts, command results, and decisions in your project evidence notes. Review code before running it. Use fixture data, not private records.
+Use [Work with two agents](two-agents.md) during review and handoff. Keep your prompts, results, and decisions in project notes. Use made-up sample data instead of private information. Ask what code will do before you approve running it.
 
-Each project has its own acceptance checks, defined in its brief. Run those checks and inspect the results before moving on. Keep failed results with the fix that resolved them; document manual checks and anything you could not verify.
+An **acceptance check** is an example you try to decide whether a feature does what you asked. You choose those examples for your idea in level 1. Try them before moving on, and record anything you could not check.
 
 Next: [Level 0: Bootstrap your project](level-0-bootstrap.md).

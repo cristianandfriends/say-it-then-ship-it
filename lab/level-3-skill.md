@@ -1,6 +1,6 @@
 ---
 title: "Level 3: Make a check-work skill"
-description: Create a project procedure and prove that the agent reuses it.
+description: Make a skill that runs your project's checks and reports the results.
 order: 4
 level: 3
 ---
@@ -9,41 +9,71 @@ level: 3
 
 ## Goal
 
-Package your project's checks as a skill that the agent can invoke and reuse.
+Make a `check-work` skill so you can ask for your project's checks by name.
 
 ## Input and task
 
-Use the commands and failure cases from level 2. Inspect the installed [stop-slop](../.agents/skills/stop-slop/SKILL.md) as a prose-skill example. You can inspect [frontend-design](../.agents/skills/frontend-design/SKILL.md) for a UI procedure; it applies if you choose a Python-served UI and does not imply Node.
+Use your working project and the checks from level 2. Open the installed [stop-slop](../.agents/skills/stop-slop/SKILL.md) file. It has a name, a description, and instructions. Your new skill will have those parts too.
 
-Ask the agent to create `check-work/SKILL.md` inside your harness's skill directory:
+Ask the agent to write the skill in plain language. Paste this into chat; use `@stop-slop` in OpenCode:
+
+```text
+/stop-slop Create a check-work skill for this project.
+Read AGENTS.md and the checks we recorded in BRIEF.md.
+Put the skill in the right folder for my coding app.
+Tell it to read the brief, run our checks, and report what passed or failed.
+It must report missing checks and ask before fixing code or changing the plan.
+Add references/what-to-check.md with our examples and expected results.
+Link that file from SKILL.md and say when to read it.
+Show me the files and explain how to use the skill.
+```
+
+Find the file it creates:
 
 - Copilot: `.github/skills/check-work/SKILL.md`
 - OpenCode: `.opencode/skills/check-work/SKILL.md`
 
-Use the mapping you inspected during bootstrap. Start the file with YAML:
+The first lines should look like this. They are **YAML frontmatter**, the information the app uses to find the skill:
 
 ```yaml
 ---
 name: check-work
-description: Run this project's tests and acceptance checks before review or handoff.
+description: Run this project's checks and report what passed, failed, or could not be checked.
 ---
 ```
 
-Give the skill a short procedure: read the brief, run named checks with the selected interpreter, inspect failures, and report commands, results, and gaps. Add one on-demand resource, such as `references/acceptance.md` with failure examples or a Python script that runs checks. Link it from the procedure and state when the agent should read or run it. Do not paste the whole project into `SKILL.md`.
+Keep the steps in `SKILL.md` short. The reference file holds your longer examples, so the agent can read them when it needs them. This is **progressive disclosure**: load a skill's instructions when you use it, then load its extra files when a step needs them.
 
-Use `scripts/` for executable checks, `references/` for detail, and `assets/` for files the procedure uses. This is progressive disclosure: the harness can use name/description to find a skill, read its procedure when needed, and load a resource for a specific step.
+Some skills also have `scripts/` for code they run and `assets/` for templates or other files they use. Your skill needs the reference you asked for; you do not have to create every kind of folder.
 
-Ask the agent to invoke `check-work` on your current project. If discovery fails, tell it to read the exact `SKILL.md` path and follow it. In a second request, ask it to reuse `check-work` after you add or adjust one acceptance test from your brief.
+## Use your new skill twice
+
+Start a new chat in the project if your app has not found the skill. Paste this into chat; use `@check-work` in OpenCode:
+
+```text
+/check-work Check my project against BRIEF.md.
+Run the checks and report what passed, failed, or could not be checked.
+Do not change the app.
+```
+
+If the skill is missing, give the agent the `SKILL.md` path above and ask it to read and follow that file.
+
+Next, ask the agent to add one automatic check for another example from your brief. Read its explanation and approve that test change. Use the skill again:
+
+```text
+/check-work Run our checks again after the test change.
+Show the new test result and any failures. Do not fix them yet.
+```
 
 ## Evidence and checkpoint
 
-Keep the skill and its resource. Capture the agent's invocation or file-read trace, its resource read or script execution, and the check commands/results from both requests. A statement that a skill "loaded" does not prove that the agent used it. Inspect the test change and verify the reported results.
+Save the skill, its reference file, and both check reports. Look in the chat's tool activity for the skill and reference-file reads, then find the test command and its result. Ask your facilitator if you cannot find them. An agent saying "I used the skill" is not enough to show that it ran the checks.
 
 <details>
 <summary>Hint</summary>
 
-Keep commands in the skill precise enough to copy. Put a detailed fixture or manual-check procedure in the reference, then state which check requires it.
+The skill should name your project's real checks from level 2. It should not copy a test command for a different project.
 
 </details>
 
-Previous: [Level 2: Build the first slice](level-2-build.md) · Next: [Level 4: Extend and review](level-4-review.md)
+Previous: [Level 2: Build your first feature](level-2-build.md) · Next: [Level 4: Extend and review](level-4-review.md)

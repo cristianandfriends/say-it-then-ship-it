@@ -1,96 +1,98 @@
 ---
 title: Start a fresh session with a handoff
-description: Give the next worker checked facts and one bounded task.
+description: Leave a short note so a new chat can pick up your project.
 order: 23
 ---
 
 # Start a fresh session with a handoff
 
-Use this reference when a session grows hard to follow, you switch workers,
-or you return to your project after a break. It supports
-[level 5](level-5-context.md); keep the handoff compact enough to inspect.
+Use this guide when a chat grows hard to follow or you return to your project
+after a break. It supports [level 5](level-5-context.md). A **handoff** is a
+short note telling the next agent what works and what to do next.
 
 ## Put each fact where you can find it
 
 | Fact | Home |
 | --- | --- |
-| Approved behavior and deferred work | `BRIEF.md` |
-| Reusable check procedure | Your project's `check-work` skill |
-| Current state, unresolved findings, and next task | `HANDOFF.md` |
-| Detailed fixtures or long results | A referenced project file |
+| What you agreed to build and what can wait | `BRIEF.md` |
+| Steps for checking the project | Your project's `check-work` skill |
+| What works, remaining problems, and next task | `HANDOFF.md` |
+| Long sample data or check results | A project file you link to |
 
-Keep stable constraints in project instructions. Avoid copying their full text
-into the handoff. Link the source and note a constraint that affects the next
-task. Resolve conflicting instructions before asking an agent to edit.
+Keep working rules in `AGENTS.md`. Link to that file instead of copying all
+its text into the handoff. If two files give different instructions, ask the
+agent to explain the conflict and help you choose before it changes the app.
 
 ```mermaid
 flowchart LR
     accTitle: Move checked context into a fresh session
     accDescr: The current worker drafts a handoff. You check its claims against project files and results, then start a fresh session. The new worker reads and restates the task. You correct missing facts before approving edits.
-    draft["Current worker drafts facts"] --> verify["You check files and results"]
-    verify --> fresh["You start a fresh session"]
-    fresh --> read["New worker reads and restates"]
-    read --> gap{"Missing or conflicting facts?"}
+    draft["Current agent writes the note"] --> verify["You check files and results"]
+    verify --> fresh["You start a new chat"]
+    fresh --> read["New agent explains the next task"]
+    read --> gap{"Anything missing or wrong?"}
     gap -->|Yes| correct["Correct the handoff"]
     correct --> read
-    gap -->|No| approve["You approve the next bounded task"]
+    gap -->|No| approve["You approve one next task"]
 ```
 
-## Copy this handoff template
+## Ask for a handoff note
 
-Use these fields in the handoff from level 5. Omit a field that has no bearing
-on the next task rather than filling it with chat history.
+Use `stop-slop` to write the note in plain language. Paste this into the
+current chat; use `@stop-slop` in OpenCode:
 
 ```text
-Goal and approved scope: [brief path and relevant section]
-Current behavior: [what works and the files that support this claim]
-Decisions: [choice, reason, and source]
-Environment: [project directory and selected Python/venv interpreter]
-Checks: [exact commands or manual steps, results, and when they ran]
-Gaps: [failures, skipped checks, unresolved review findings]
-Next task: [one change, acceptance examples, and allowed file scope]
-Preserve: [existing behavior and data contracts]
-Leave out: [deferred work and actions requiring human approval]
-References: [skill path, fixtures, and detailed results]
+/stop-slop Write HANDOFF.md for a new chat.
+Use AGENTS.md, BRIEF.md, the project files, and our latest check results.
+Say what works, what we decided, and which files explain those decisions.
+Include how to run the project and the Python environment we used.
+List unfixed problems, failed checks, and checks we could not run.
+The next task is [one task]. Include its examples and expected results.
+Say what must keep working and what needs my approval.
+Link to longer files and keep the note short. Do not change the app.
 ```
 
-Treat results from before the latest edit as historical evidence. State which
-version of the work they cover. Include failed checks that still affect the
-next task, even if another check passed.
+Check the note yourself. A test result from before the latest change may no
+longer describe your project. Ask the agent to say when it ran the checks
+and keep any failures the next agent needs to know about.
 
 ## Ask the next worker to recover the task
 
-Start a fresh session through your harness's supported controls. A request to
-“start fresh” inside the old chat does not prove that you started a new session.
-Use this prompt after supplying the project:
+Use your app's new-chat control while keeping the project open. Ask your
+facilitator where to find it. Then paste this into the new chat:
 
 ```text
-Role: recover context for the next implementation task.
-Inputs: read AGENTS.md, BRIEF.md, HANDOFF.md, and the named check-work skill.
-Authority: inspect the project; do not edit files yet.
-Output: restate the next task, acceptance examples, constraints, and gaps.
-Name the files you read and any handoff claims you could not verify.
-Handoff: wait for my approval before implementing the bounded task.
+Read AGENTS.md, BRIEF.md, and HANDOFF.md.
+Explain what the project does and the next task in your own words.
+Tell me what results to expect and what must keep working.
+Name the files you read and anything missing or unclear.
+Do not change files until I approve the task.
 ```
 
-Check the restatement against your brief. Correct a missing fact in the
-handoff so the next worker can find it without reconstructing the old chat.
+Compare its answer with your brief. Correct missing or wrong facts in
+`HANDOFF.md`, then ask the new agent to read the corrected note.
 
 ## Optional example: preserve a rejected input
 
-Suppose the next task adds a new sort order. Your previous session found that
-an empty input must produce a clear message without changing saved data.
-Name that behavior and its check in the handoff. The fresh worker should
-preserve it while adding the sort order.
+Suppose your next task adds a way to sort saved items. You already decided
+that leaving a required field blank should show a message and leave saved
+information unchanged. Put that decision and its check in the handoff.
+Ask the new agent to keep it working when it adds sorting.
 
 ## Check execution after the handoff
 
-Harnesses differ in compaction and worker support. Inspect any generated
-summary; do not assume it includes approvals, failed checks, or deferred work.
-You must start the next session and receive its response to complete the
-transfer.
+Some apps can summarize an old chat. Read any summary for missing decisions.
+In level 5, open a new chat and get a response from the new agent; a summary
+inside the old chat does not complete that step.
 
-After approving implementation, inspect the change and run the acceptance
-and regression checks. A good restatement proves context recovery, not working
-code. Use [Check and debug agent work](debug-agent-work.md) for mismatches and
-[Work with two agents](two-agents.md) for an independent review.
+After approving the task and receiving the change, use your checking skill.
+In OpenCode, use `@check-work`:
+
+```text
+/check-work Check the new change and the examples that worked before.
+Report what passed, failed, or could not be checked.
+```
+
+Try the feature yourself. Use [Check and debug agent work](debug-agent-work.md)
+if it differs from your plan and [Work with two agents](two-agents.md) for a
+second opinion.

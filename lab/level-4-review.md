@@ -1,6 +1,6 @@
 ---
 title: "Level 4: Extend and review"
-description: Make one project improvement and get an independent read-only review.
+description: Improve one thing and ask a different agent to review the change.
 order: 5
 level: 4
 ---
@@ -9,39 +9,71 @@ level: 4
 
 ## Goal
 
-Make one bounded improvement, get an independent review, and fix reproduced findings.
+Improve one thing, get a second opinion, and fix any problems you confirm.
 
 ## Input and task
 
-Choose one improvement from your project's deferred work, or a bug you can reproduce. Update `BRIEF.md` with its acceptance criteria and name the existing behavior the change must preserve.
-
-Give the installed software-engineering-expert agent the brief and that bounded task. Ask it to implement the change and focused tests within the approved scope. Use the native agent file you inspected in level 0. Preserve its harness metadata.
-
-Run `check-work` after implementation. Include checks for the new behavior and regressions in the working version. Check preservation of unrelated data when your change writes data.
-
-After implementation stops, delegate a read-only review to a fresh general-purpose worker in Copilot or a fresh general worker in OpenCode. Use your harness's supported controls. Give the worker the brief, changed-file scope, diff or before/after excerpts, and commands/results. Git is not required: provide saved before/after text and the changed files if no diff tool exists.
+Choose one item from the "Later" section of your brief, or a bug you can make happen again. Before asking for code, update the plan. Paste this into chat; use `@stop-slop` in OpenCode:
 
 ```text
-Review this change against BRIEF.md and the approved scope.
-Use the supplied changed files, before/after input, and check results.
-Do not edit files. Look for bugs, missing acceptance criteria,
-and regressions in existing behavior.
-For each finding, name the file, the failing input, and reproduction.
-Report checks you ran, evidence, and anything you could not verify.
+/stop-slop Update BRIEF.md for this one change: [improvement or bug].
+Add an example I can try and the result I should expect.
+Name something that works now and must keep working.
+Ask me to approve the plan before anyone changes the app.
 ```
 
-Keep the implementer and reviewer from editing shared files at the same time. If the harness cannot spawn a worker, the orchestrator must start an independent review session and supply the same bounded input. Record the review as pending until that session returns findings. Do not claim a review that did not occur.
+After approving the plan, ask the `software-engineering-expert` agent to build the change:
 
-Reproduce findings before fixing them. Ask the implementer to fix confirmed bugs and rerun `check-work`. Keep evidence for any finding you reject. Run the new acceptance checks and the existing checks yourself. Use the commands and manual steps recorded for your project. See [Work with two agents](two-agents.md) for the review/handoff loop.
+```text
+Use the software-engineering-expert agent to make the change I approved.
+Read AGENTS.md and BRIEF.md. Leave other features alone.
+Write a test that catches the missing feature or bug before changing the app.
+Show its failing result, make the change, then run the checks again.
+Have a different worker review the change without editing files.
+Show me the changes, check results, and that worker's review.
+```
+
+Ask your facilitator to help you select or launch that agent if needed. A prompt naming an agent is a request to use it; check the app's activity to see whether it started.
+
+Run your skill after the change. In OpenCode, use `@check-work`:
+
+```text
+/check-work Check the new example and our existing examples.
+If the app saves information, check that unrelated saved information stays safe.
+Report the results and anything you could not check.
+```
+
+## Get a second opinion
+
+The engineering agent should ask a separate worker to review its code. Find that review in its response. A **read-only review** means the reviewer can read files and report problems but cannot change the app.
+
+If you have not received a separate review, ask your facilitator to help you start one. Copilot calls a general worker `general-purpose`; OpenCode calls it `general`. Use a new chat for the reviewer if your app cannot start another worker.
+
+Give the reviewer your brief, the changed files, a copy of what changed, and the check results. Your agent can prepare before-and-after copies; you do not need Git. Give this prompt to the reviewer:
+
+```text
+/check-work Review this change against BRIEF.md.
+Read the supplied changed files, before-and-after copies, and check results.
+Do not edit files. Check whether the agreed examples work
+and whether the change broke something that worked before.
+For each problem, name the file and steps to make it happen.
+Report what you checked and what you could not check.
+```
+
+Wait for the reviewer to respond. If it has not responded, record "review pending." The first agent looking at its own work does not count as a second opinion.
+
+Try the reported problems before asking for fixes. Give confirmed problems to the agent that wrote the code, then use `/check-work` again. Keep one agent in charge of file changes at a time. Try the new feature yourself and check that your earlier examples still work.
+
+See [Work with two agents](two-agents.md) for the review loop.
 
 ## Evidence and checkpoint
 
-Keep the changed-file scope, reviewer/session identity, review input, actual findings, reproductions, fixes, and final commands/results. Record "no findings" with what the reviewer checked if that is the result. A pending review remains a gap even if tests pass.
+Save the plan, changed-file list, check reports, and the separate review. Record who reviewed it, any problems you confirmed, and what you fixed. If the reviewer found no problems, keep its explanation of what it checked.
 
 <details>
 <summary>Hint</summary>
 
-Give the reviewer a concrete example the change could break. Ask it to compare expected and observed behavior, including work outside the changed feature that must remain intact.
+Show the reviewer an example that worked before your change. Ask it to try that example as well as the new one.
 
 </details>
 
