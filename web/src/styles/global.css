@@ -97,7 +97,10 @@ nav {
 
 nav a { text-decoration: none; white-space: nowrap; }
 
-.repository-link {
+.header-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
   justify-self: end;
   white-space: nowrap;
 }
@@ -226,7 +229,7 @@ nav a { text-decoration: none; white-space: nowrap; }
   font-size: 0.8rem;
 }
 
-.material-group { margin-top: 24px; }
+.material-group { margin-top: 24px; scroll-margin-top: 24px; }
 .material-group h3 { color: var(--silver); }
 
 .site-footer {
@@ -296,18 +299,22 @@ nav a { text-decoration: none; white-space: nowrap; }
 .diagram-output svg { display: block; min-width: 600px; max-width: 100%; height: auto; margin-inline: auto; }
 .diagram-message { margin-bottom: 12px; color: var(--yellow); }
 
-@media (width <= 850px) {
+@media (width <= 950px) {
   .site-header { grid-template-columns: minmax(0, 1fr) auto; gap: 16px; padding-block: 20px; }
-  .repository-link { grid-column: 2; grid-row: 1; }
+  .header-links { grid-column: 2; grid-row: 1; }
   nav { grid-column: 1 / -1; width: 100%; gap: 24px; justify-content: flex-start; }
   .discord-link { margin-left: auto; }
+}
+
+@media (width <= 850px) {
   .ascii-flow { display: none; }
 }
 
 @media (width <= 540px) {
   :root { font-size: 14px; }
   .shell { width: calc(100% - 32px); }
-  .repository-link { font-size: 0.875rem; }
+  .brand { gap: 8px; font-size: 0.875rem; }
+  .header-links { display: grid; gap: 4px; font-size: 0.875rem; }
   nav { gap: 12px; }
   .discord-link { padding-inline: 8px; }
   .intro { padding-block: 28px 32px; }

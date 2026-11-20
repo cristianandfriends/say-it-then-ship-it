@@ -32,8 +32,10 @@ evidence, and known limitations. State missing inputs rather than inventing them
 - Make shared manifest changes at field scope. Preserve unrelated fields and
   lockfile entries; use the project's package tooling for lock updates and
   atomic writes for programmatic file updates. Coordinate overlapping ownership.
-- Test changed behavior, meaningful failure cases, and preservation of existing
-  behavior with the smallest relevant test command.
+- Use test-driven development (TDD) for behavior changes: write a focused test,
+  confirm it fails for the expected reason, implement the change, then refactor
+  with passing tests. Cover meaningful failure cases and preservation of
+  existing behavior with the smallest relevant test command.
 - Update schemas, validators, prompts, references, and tests that express the
   same changed contract. Check downstream consumers and regenerate or remove
   stale outputs within scope. Report necessary work outside your authority.

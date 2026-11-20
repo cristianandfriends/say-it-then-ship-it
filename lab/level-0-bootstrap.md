@@ -16,15 +16,23 @@ Choose a harness and install project instructions without building an app.
 Use the supplied workshop folder and a separate empty student project. Choose GitHub Copilot or OpenCode from the access your facilitator provides. Do not install a harness. You will choose what to build in level 1; this level prepares the workspace.
 
 1. Open this file as Markdown source. Find the YAML frontmatter between `---` lines, the heading, a link, and a code fence. Explain which fields describe the page and which text gives the task.
-2. Read [bootstrap-lab](../.agents/skills/bootstrap-lab/SKILL.md). If your harness does not discover it, ask the agent to read `workshop/.agents/skills/bootstrap-lab/SKILL.md` and follow it. Reading the file is a supported way to invoke these instructions.
-3. Give the agent your harness, workshop path, and destination path. Ask it to install the starter material and leave project-specific planning for level 1. Keep the two folders separate.
-4. Approve the bootstrap operation. From the workshop's parent folder, the script command has this form:
+2. Read [bootstrap-lab](../.agents/skills/bootstrap-lab/SKILL.md), then ask your agent to use it with the prompt below. Replace the paths with your workshop and project folders. Keep the two folders separate.
 
 ```text
-python workshop/.agents/skills/bootstrap-lab/scripts/bootstrap_lab.py --harness copilot --target student-project
+Use the bootstrap-lab skill. Read and follow
+workshop/.agents/skills/bootstrap-lab/SKILL.md.
+
+Ask whether I use GitHub Copilot or OpenCode.
+Install the starter skills, engineering agent, and project instructions
+from workshop into student-project.
+Show me the plan and ask for approval before changing files.
+I will choose my project idea in level 1. Leave project planning until then.
 ```
 
-Use `--harness opencode` for OpenCode. The script infers the source from its location; `--source workshop` can name it. It needs no dependencies. If it reports a modified-file collision, inspect the difference rather than overwrite your work.
+3. Answer the harness question and approve the bootstrap operation after reviewing the plan. The agent runs the skill's included Python installer; you do not need to type its script path. If your harness does not discover the skill, it can read and follow the file named in the prompt.
+4. Inspect the installer result. If it reports a modified-file collision, inspect the difference rather than overwrite your work.
+
+You need no packages or virtual environment to copy the starter material. When your project needs a PyPI dependency, ask the agent to follow [Prepare Python dependencies](../.agents/skills/bootstrap-lab/SKILL.md#prepare-python-dependencies) in the same skill.
 
 Inspect the generated `AGENTS.md`, skills, and software-engineering-expert agent. Record the paths for your harness:
 

@@ -1,6 +1,6 @@
 ---
 name: bootstrap-lab
-description: Install the workshop's starter skills and engineering agent into a Copilot or OpenCode project, then plan project-specific roles and skills.
+description: Install starter skills and the engineering agent for Copilot or OpenCode, prepare Python/uv environments, and plan project roles.
 ---
 
 # Bootstrap a workshop project
@@ -8,6 +8,10 @@ description: Install the workshop's starter skills and engineering agent into a 
 Use this skill when a workshop participant wants to set up a project for coding
 agents. Treat the shipped material as examples to evolve, not an exhaustive
 rulebook.
+
+For an environment-only request in a bootstrapped project, read its `AGENTS.md`
+and go to [Prepare Python dependencies](#prepare-python-dependencies). Do not
+repeat the harness selection or starter installation.
 
 ## Establish the scope
 
@@ -89,6 +93,50 @@ Check the reported paths and restart or open a session if your harness needs to
 discover the new skill and agent. Ask the harness to load `bootstrap-lab`; verify
 that it can find the engineering agent.
 
+## Prepare Python dependencies
+
+Use this procedure when the participant needs project dependencies or asks for
+a virtual environment. The copied project `AGENTS.md` sets the Python/uv
+policy; keep the execution steps here. Copying starter instructions does not
+provision an environment or install packages.
+
+Inspect the existing project environment and dependency files before proposing
+changes. Reuse a suitable virtual environment and its tools. Preserve the
+project's dependency declarations and lockfiles. Show the proposed environment,
+interpreter, and packages; get confirmation before creating environments or
+installing tools. Do not overwrite or clear an existing environment.
+
+If `uv` is missing, use the standard library to create a tool environment, then
+install `uv` there with pip:
+
+```text
+python -m venv .uv-tools
+```
+
+| Platform | Install uv | Create the project environment |
+| --- | --- | --- |
+| macOS / Linux | `.uv-tools/bin/python -m pip install uv` | `.uv-tools/bin/uv venv --no-python-downloads --python <python-executable> .venv` |
+| Windows | `.uv-tools\Scripts\python.exe -m pip install uv` | `.uv-tools\Scripts\uv.exe venv --no-python-downloads --python <python-executable> .venv` |
+
+Use the path to the participant's installed Python for `<python-executable>`.
+Create `.venv` when no suitable project environment exists. Use the existing
+`uv` executable instead of `.uv-tools/.../uv` when you have one. Keep dependency
+resolution on PyPI and prevent interpreter downloads.
+
+For a project without dependency files, replace `PACKAGE` with the approved
+dependency and use the command for the participant's platform:
+
+| Platform | Install the project dependency |
+| --- | --- |
+| macOS / Linux | `.uv-tools/bin/uv pip install --python .venv/bin/python PACKAGE` |
+| Windows | `.uv-tools\Scripts\uv.exe pip install --python .venv\Scripts\python.exe PACKAGE` |
+
+If the project has dependency files, use its existing `uv` workflow with the
+selected interpreter and Python downloads disabled. Use the project's venv
+interpreter for checks. Report its path, confirm `sys.prefix != sys.base_prefix`,
+and check that the approved dependency imports there. Report failures before
+continuing. The bootstrap installer itself needs neither pip nor `uv`.
+
 ## Plan before adding more roles or skills
 
 Start project-specific planning after the participant chooses an idea. If they
@@ -105,24 +153,6 @@ boundary. Keep detailed procedures in skills. For a skill, start with a short
 `SKILL.md`; move execution code into `scripts/`, supporting contracts into
 `references/`, and reusable templates into `assets/`. Link those resources when
 the agent needs them instead of loading the whole directory into each prompt.
-
-For project dependencies, use `uv` and a project virtual environment. If `uv` is
-missing, use the standard library to create a tool environment, then install
-`uv` there with pip:
-
-```text
-python -m venv .uv-tools
-```
-
-| Platform | Install uv | Create the project environment |
-| --- | --- | --- |
-| macOS / Linux | `.uv-tools/bin/python -m pip install uv` | `.uv-tools/bin/uv venv --no-python-downloads --python <python-executable> .venv` |
-| Windows | `.uv-tools\Scripts\python.exe -m pip install uv` | `.uv-tools\Scripts\uv.exe venv --no-python-downloads --python <python-executable> .venv` |
-
-Use the path to the participant's installed Python for `<python-executable>`.
-This prevents a runtime download. Keep dependency resolution on PyPI and use the
-environment-local `uv` for project dependency commands. Do not install tools
-into system Python. The bootstrap installer itself needs neither pip nor `uv`.
 
 ## Prose
 

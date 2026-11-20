@@ -46,6 +46,49 @@ test("renders shared Markdown, highlighted code, and Mermaid under the project b
   await expect(page).toHaveURL(new URL(withBase("#files"), baseURL).href);
 });
 
+test("links to Start here and Guides from the top right of a reader", async ({ page, baseURL }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("files/lab/two-agents/");
+  const startLink = page.getByRole("banner").getByRole("link", { name: "Start here", exact: true });
+  await expect(startLink).toHaveAttribute("href", withBase("files/lab/start-here/"));
+  const guidesLink = page.getByRole("banner").getByRole("link", { name: "Guides", exact: true });
+  await expect(guidesLink).toHaveAttribute("href", withBase("#guides"));
+  const headerBounds = await page.getByRole("banner").boundingBox();
+  for (const link of [startLink, guidesLink]) {
+    const linkBounds = await link.boundingBox();
+    expect(linkBounds!.x).toBeGreaterThan(headerBounds!.x + headerBounds!.width / 2);
+  }
+
+  await startLink.click();
+  await expect(page).toHaveURL(new URL(withBase("files/lab/start-here/"), baseURL).href);
+  await expect(page.getByRole("heading", { name: "Start here", exact: true })).toBeVisible();
+  await guidesLink.click();
+  await expect(page).toHaveURL(new URL(withBase("#guides"), baseURL).href);
+  const guides = page.getByRole("region", { name: "Guides", exact: true });
+  await expect(guides).toBeInViewport();
+  await expect(guides.getByRole("link", { name: /Work with two agents/ })).toBeVisible();
+});
+
+test("renders supplementary guides with accessible diagrams on mobile", async ({ page }) => {
+  await page.goto("./#guides");
+  const guides = page.getByRole("region", { name: "Guides", exact: true });
+  const paths = await guides.locator('a[href*="/files/lab/"]').evaluateAll((links) =>
+    links.map((link) => link.getAttribute("href")!)
+      .filter((href) => !href.endsWith("/start-here/")),
+  );
+  expect(paths.length).toBeGreaterThanOrEqual(4);
+
+  await page.setViewportSize({ width: 320, height: 740 });
+  for (const path of paths) {
+    await page.goto(path);
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await expect(page.locator(".diagram svg").first()).toBeVisible();
+    await expect(page.locator(".diagram svg").first()).toHaveAccessibleName(/\S/);
+    await expect(page.locator(".diagram-message")).toHaveCount(0);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  }
+});
+
 test("keeps the home and reader pages inside a narrow mobile viewport", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 740 });
   for (const path of [
@@ -58,6 +101,11 @@ test("keeps the home and reader pages inside a narrow mobile viewport", async ({
     await page.goto(path);
     await expect(page.getByRole("link", { name: "Join Discord" })).toBeVisible();
     await expect(page.getByRole("banner").getByRole("link", { name: "GitHub", exact: true })).toBeVisible();
+    await expect(page.getByRole("banner").getByRole("link", { name: "Guides", exact: true })).toBeVisible();
+    await expect(page.getByRole("banner").getByRole("link", { name: "Start here", exact: true })).toBeVisible();
+    const brandBounds = await page.locator(".brand").boundingBox();
+    const linksBounds = await page.locator(".header-links").boundingBox();
+    expect(brandBounds!.x + brandBounds!.width).toBeLessThanOrEqual(linksBounds!.x);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
   }
 });

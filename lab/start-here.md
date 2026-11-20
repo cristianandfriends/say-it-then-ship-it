@@ -26,15 +26,18 @@ In examples, `workshop` means the supplied workshop folder and `student-project`
 
 Use `python` for your selected interpreter. On macOS or Linux you might use `python3`; on Windows you might use `py -3`. Check it with `python --version`. Replace `python` in each command with the command that selects your interpreter.
 
-The workshop bootstrap needs no dependency installation. If your project needs a PyPI dependency, create a venv, then install and run uv inside that venv:
+You need no packages or virtual environment to install the starter material in level 0. The copied project `AGENTS.md` requires `uv` and virtual environments when you add dependencies. Use [Prepare Python dependencies](../.agents/skills/bootstrap-lab/SKILL.md#prepare-python-dependencies) in `bootstrap-lab` for the setup steps:
 
 ```text
-python -m venv .venv
-.venv/bin/python -m pip install uv
-.venv/bin/python -m uv pip install --python .venv/bin/python PACKAGE
+Use bootstrap-lab to prepare a Python environment for [dependency].
+Follow my project's AGENTS.md and the skill's Prepare Python dependencies steps.
+Show the plan and ask before installing tools or packages.
+Use my installed Python and PyPI. Do not download another interpreter.
 ```
 
-Replace `PACKAGE` with the approved dependency. On Windows, replace `.venv/bin/python` with `.venv\Scripts\python.exe`. Use that venv interpreter for project commands after installing dependencies. Do not install into system Python or download another interpreter. Network access beyond PyPI is not part of the exercises; read linked reference pages through facilitator-provided copies if needed.
+Replace `[dependency]` with a package your project needs. Ask the agent to report the project interpreter path and use it for project commands. Keep the policy in `AGENTS.md` and the provisioning procedure in `bootstrap-lab`; you do not need another starter skill for this step.
+
+Do not install into system Python. Network access beyond PyPI is not part of the exercises; read linked reference pages through facilitator-provided copies if needed.
 
 ## Route
 

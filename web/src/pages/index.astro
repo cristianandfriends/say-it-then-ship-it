@@ -6,12 +6,14 @@ import { discordUrl, openSlidesUrl, slidesUrl } from "../../site.config.mjs";
 const materials = (await getMaterials()).map(materialInfo);
 const groups = [
   {
+    id: "lab-levels",
     title: "Lab levels",
     files: materials
       .filter((material) => material.level !== undefined)
       .sort((a, b) => a.level! - b.level!),
   },
   {
+    id: "guides",
     title: "Guides",
     files: materials.filter(
       (material) =>
@@ -20,6 +22,7 @@ const groups = [
     ),
   },
   {
+    id: "agents-and-skills",
     title: "Agents and skills",
     files: materials.filter(
       (material) =>
@@ -65,7 +68,7 @@ const groups = [
       <span>Read here. Use in your repo.</span>
     </div>
     {groups.map((group) => (
-      <section class="material-group" aria-label={group.title}>
+      <section id={group.id} class="material-group" aria-label={group.title}>
         <h3>{group.title}</h3>
         <ul class="file-list">
           {group.files.map((material) => (
