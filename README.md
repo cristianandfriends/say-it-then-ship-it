@@ -2,9 +2,9 @@
 
 An El Camino College ScaleUP workshop (2026) for building with GitHub Copilot and OpenCode.
 
-[![Open the workshop site](https://img.shields.io/badge/workshop-open-444444?style=flat-square)](https://cristians.space/say-it-then-ship-it/)
-[![Read the workshop slides](https://img.shields.io/badge/slides-read-444444?style=flat-square)](https://docs.google.com/presentation/d/e/2PACX-1vRgWXcd3VTgfIUE0qp6972ijj1sA6HPSrSgOzt0O8eHMBFqTroFWwSJ43UzPcBTRos33YO6-PLOwQf6/pub?start=false&loop=false&delayms=3000)
-[![Join the workshop Discord chat](https://img.shields.io/badge/Discord-chat-444444?style=flat-square)](https://discord.gg/sMafw3ktj)
+[![Open the workshop site](https://img.shields.io/badge/workshop-open-00ffff?style=flat-square&labelColor=000080)](https://cristians.space/say-it-then-ship-it/)
+[![Read the workshop slides](https://img.shields.io/badge/slides-read-ffff55?style=flat-square&labelColor=000080)](https://docs.google.com/presentation/d/e/2PACX-1vRgWXcd3VTgfIUE0qp6972ijj1sA6HPSrSgOzt0O8eHMBFqTroFWwSJ43UzPcBTRos33YO6-PLOwQf6/pub?start=false&loop=false&delayms=3000)
+[![Join the workshop Discord chat](https://img.shields.io/badge/Discord-chat-5865f2?style=flat-square&labelColor=000080)](https://discord.gg/sMafw3ktj)
 
 ```text
 [setup] -> [idea] -> [build]
