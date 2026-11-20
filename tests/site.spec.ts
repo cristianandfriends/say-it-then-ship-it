@@ -16,7 +16,11 @@ test("puts the deck first and links to the live chat and repository", async ({ p
   );
   await expect(page.getByRole("link", { name: "Join Discord" })).toHaveAttribute(
     "href",
-    "https://discord.gg/sMafw3ktj",
+    "https://discord.gg/WqcQTVW6fM",
+  );
+  await expect(page.getByRole("link", { name: "the live Discord chat", exact: true })).toHaveAttribute(
+    "href",
+    "https://discord.gg/WqcQTVW6fM",
   );
   await expect(page.getByRole("link", { name: "Source on GitHub" })).toHaveAttribute(
     "href",
