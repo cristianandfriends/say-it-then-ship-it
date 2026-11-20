@@ -13,8 +13,10 @@ rulebook.
 
 1. Ask: **Are you using GitHub Copilot or OpenCode?** Ask even if the repository
    contains configuration for one of them.
-2. Ask for the workshop source directory, destination project, and project goal
-   when you do not know them. The source must contain the canonical
+2. Ask for the workshop source directory and destination project when you do
+   not know them. An idea is optional during setup: install the starter material
+   without inventing a project goal if the participant has not chosen one.
+   The source must contain the canonical
    `.agents/skills/` directories and
    `.github/agents/software-engineering-expert.agent.md`.
 3. Inspect the destination instructions and relevant files. Explain which
@@ -88,6 +90,10 @@ discover the new skill and agent. Ask the harness to load `bootstrap-lab`; verif
 that it can find the engineering agent.
 
 ## Plan before adding more roles or skills
+
+Start project-specific planning after the participant chooses an idea. If they
+have not chosen one, finish the starter installation and defer this step to
+level 1. Do not make project selection a prerequisite for bootstrap.
 
 Use the participant's project goal to identify the next deliverable, its
 acceptance checks, and constraints. Ask which repeated tasks need a reusable

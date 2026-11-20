@@ -1,6 +1,6 @@
 ---
 title: "Level 2: Build the first slice"
-description: Implement add and list, then check the CLI from outside its code.
+description: Implement the first behavior from your brief and check the result.
 order: 3
 level: 2
 ---
@@ -9,46 +9,42 @@ level: 2
 
 ## Goal
 
-Build the smallest working `add` and `list` commands, with focused tests.
+Build the first behavior from your approved brief, with focused checks.
 
 ## Input and task
 
-Give your coding agent `AGENTS.md`, the approved `BRIEF.md`, and the [level 1 contract](level-1-brief.md). Ask it to implement a Python 3.9+ standard-library CLI and `unittest` tests. Keep `done` out of this change.
+Give your coding agent `AGENTS.md` and the approved `BRIEF.md` from [level 1](level-1-brief.md). Ask it to implement the first behavior and tests for the agreed examples. Keep deferred features out of this change.
 
-Require `python -m study_queue --file <path> add "Read chapter 1"` and `... list`. An add returns its new JSON object; list returns a JSON array in stored order. IDs start at 1 and increase by max + 1. Check missing-file behavior, whitespace-only text, malformed JSON, and preservation of root/item metadata. Use the exact contract in your brief, with diagnostics on stderr and nonzero error exits.
+Use this prompt after replacing the bracketed field:
 
-Ask the agent for tests that would catch a real failure: repeated adds and list, blank-text rejection with no writes, and malformed bytes that survive failed commands. Include a metadata fixture. Inspect the changes before you run code.
+```text
+Read AGENTS.md and BRIEF.md. Implement [the approved first behavior].
+Keep the change within that scope and use our agreed interface.
+Add focused tests for the normal case and failure or boundary case.
+Explain how I can run it and reproduce each acceptance check.
+Report changed files, commands/results, and anything you could not check.
+```
 
-From the student project, run your tests and the CLI yourself. Use a new practice filename:
+Ask for tests that would fail if the required behavior were missing or broken. Use synthetic inputs or disposable fixtures. If the project writes data, check what it should preserve when an operation fails. Review code and dependency changes before running them.
+
+From the student project, run the agreed checks with your selected interpreter. For a project using standard-library `unittest` tests in `tests/`, the command is:
 
 ```text
 python -m unittest discover -s tests -v
-python -m study_queue --file practice-level-2.json list
-python -m study_queue --file practice-level-2.json add "Read chapter 1"
-python -m study_queue --file practice-level-2.json add "Review notes"
-python -m study_queue --file practice-level-2.json list
 ```
 
-Before the first add, confirm that list printed `[]` and did not create the file. After the adds, expect IDs 1 and 2, with `done` false.
+Use your project's command if it differs, and record it in `BRIEF.md`. Try the feature through its intended interface and compare the result with your examples. For UI behavior, keep the manual steps and observed result alongside automated tests of the underlying logic.
 
-Run the workshop checker from any folder, substituting paths:
-
-```text
-python workshop/lab/check.py --level 2 --project student-project
-```
-
-The checker uses your selected Python interpreter and runs your code from the project directory. It creates disposable data paths inside the project, passes them with `--file`, and removes its scratch directory when done. It does not pass your real queue path. Review code first: the checker cannot sandbox student code that ignores `--file`. Each subprocess has a five-second timeout; there is no timed grade.
-
-The checker covers the default project at levels 2 and 4. For another idea, record equivalent black-box checks from your approved brief.
+If a check fails, keep the failure evidence, ask for a scoped fix, and rerun it. Ask before changing an acceptance criterion to accommodate the implementation.
 
 ## Evidence and checkpoint
 
-Keep the changed file list, test command/output, manual JSON results, and checker command/output with its exit status. Resolve failures and rerun. Read a store file to verify that stdout and saved data agree before you proceed.
+Keep the changed file list, exact check commands or manual steps, expected results, and observed results. Demonstrate the first behavior and the failure or boundary case from your brief. Name anything you could not verify.
 
 <details>
 <summary>Hint</summary>
 
-Tell the agent to separate argument parsing, reading/writing JSON, and queue operations. Ask it to explain the point where it validates data before writing.
+If the first version is too large to check, choose a smaller behavior with a visible result and revise the brief before implementing more.
 
 </details>
 

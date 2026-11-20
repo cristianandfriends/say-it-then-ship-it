@@ -25,7 +25,7 @@ Use the mapping you inspected during bootstrap. Start the file with YAML:
 ```yaml
 ---
 name: check-work
-description: Run the study queue tests and acceptance checks before review or handoff.
+description: Run this project's tests and acceptance checks before review or handoff.
 ---
 ```
 
@@ -42,8 +42,8 @@ Keep the skill and its resource. Capture the agent's invocation or file-read tra
 <details>
 <summary>Hint</summary>
 
-Keep commands in the skill precise enough to copy. Put a long malformed-store example in the reference, then require the agent to consult that reference when checking data preservation.
+Keep commands in the skill precise enough to copy. Put a detailed fixture or manual-check procedure in the reference, then state which check requires it.
 
 </details>
 
-Previous: [Level 2: Build the first slice](level-2-build.md) · Next: [Level 4: Add a command and review it](level-4-review.md)
+Previous: [Level 2: Build the first slice](level-2-build.md) · Next: [Level 4: Extend and review](level-4-review.md)

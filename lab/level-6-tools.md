@@ -1,6 +1,6 @@
 ---
 title: "Level 6: Try a read-only MCP tool"
-description: Explore a fixed-path queue summary tool, or record a safe fallback.
+description: Expose one read-only project operation as a tool, or record a safe fallback.
 order: 7
 level: 6
 ---
@@ -9,7 +9,7 @@ level: 6
 
 ## Goal
 
-Expose a read-only queue summary through MCP and verify a tool result. This level is an optional bonus.
+Expose one read-only operation from your project through MCP and verify a tool result. This level is an optional bonus.
 
 ## Input and task
 
@@ -27,14 +27,16 @@ python -m venv .venv
 
 On Windows, use `.venv\Scripts\python.exe` in place of `.venv/bin/python`. Keep dependencies inside the venv. Use `FastMCP` from `mcp.server.fastmcp`; do not install a separate FastMCP package for this exercise. If package compatibility or PyPI access blocks setup, use the fallback.
 
-Ask your agent for a small server with one tool, `queue_summary`, and focused tests. Require:
+Choose one operation that fits your idea, such as validating sample input or computing a preview. Define its name, allowed inputs, expected output, and a failure case in your brief. Use synthetic input or a disposable fixture with a result you can check.
 
-- One fixed fixture path anchored to the student project, for example `mcp_fixture/queue.json`. Do not accept user-supplied paths or use the process working directory to pick a file.
-- No writes, shell commands, network calls, or path-selection arguments. Do not connect your real queue.
-- A structured result with total, open, and done counts. Missing or malformed data must produce an explicit error without creating or changing files.
+Ask your agent for a small server that exposes that operation as one tool, with focused tests. Require:
+
+- A narrow input contract. If it reads a file, use a fixed disposable fixture path anchored to the student project; do not accept arbitrary paths.
+- No writes, shell commands, network calls, or credentials. Keep private data out of the exercise.
+- A structured result you can compare with the expected output in your brief. Invalid input must produce an explicit error without changing state.
 - Stdio transport. Keep stdout for MCP messages; send diagnostics to stderr. Do not add stdout debug prints.
 
-Create a known fixture with two items: one with `done: false` and one with `done: true`. Review the code and tests before launch.
+Review the code and tests before launch. Test the operation and its failure case with your known input.
 
 Use the harness's current documentation to configure a local stdio server with the absolute venv interpreter path and server path:
 
@@ -43,22 +45,22 @@ Use the harness's current documentation to configure a local stdio server with t
 
 Use facilitator-provided copies if you cannot reach the docs. Copilot surfaces and OpenCode use different configuration locations and fields. Do not guess a shared JSON configuration. Keep the tool local; do not enable unrelated servers or credentials.
 
-Ask the connected harness to list tools, select `queue_summary`, and invoke it with the known fixture. Inspect the actual structured result: total 2, open 1, done 1. Compare file bytes before and after. Stop the server through your harness when you finish.
+Ask the connected harness to list tools, select your tool, and invoke it with the agreed input. Compare the actual structured result with your expected result. Confirm that the tool changed no state, including fixture bytes if it reads files. Stop the server through your harness when you finish.
 
 ## Evidence and checkpoint
 
-Keep interpreter/package versions, server and fixture paths, tests/results, tool listing, invocation arguments, and actual result. Record connection errors as errors, not successful tool calls.
+Keep interpreter/package versions, server path, input or fixture, expected result, tests/results, tool listing, invocation arguments, and actual result. Record connection errors as errors, not successful tool calls.
 
 ### Required safe fallback
 
-If the interpreter, provider, or harness cannot connect, do not add a service. Read the fixture with a local stdlib Python check, compute the same counts, and compare bytes before/after. Record the command and actual result, plus "MCP connection not demonstrated" and the reason. This completes the fallback; a local function call does not prove an MCP connection.
+If the interpreter, provider, or harness cannot connect, do not add a service. Run the same read-only operation as a local Python function using the agreed input. Compare its result with your expected output and confirm that it changed no state. Record the command and actual result, plus "MCP connection not demonstrated" and the reason. This completes the fallback; a local function call does not prove an MCP connection.
 
-The workshop checker has no level 6 mode. A human checks this evidence.
+Ask your facilitator to inspect the evidence against your project's agreed tool contract.
 
 <details>
 <summary>Hint</summary>
 
-Separate the summary function from the MCP wrapper. You can test its fixed-path read and error behavior without starting a server, and reuse that function for the fallback.
+Separate the project operation from the MCP wrapper. Test its normal and error results without starting a server, then reuse that function for the fallback.
 
 </details>
 

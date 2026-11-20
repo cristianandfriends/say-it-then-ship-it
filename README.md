@@ -6,7 +6,7 @@ An El Camino College ScaleUP workshop (2026) for building with GitHub Copilot an
 
 ## Start the lab
 
-Follow [the lab guide](lab/start-here.md) through levels 0 to 6. Build a local Python study queue, then practice writing a skill, reviewing with another agent, and handing work to a fresh session. The last level offers a read-only MCP exercise.
+Follow [the lab guide](lab/start-here.md) through levels 0 to 6 with your own idea. Set up the workspace, define a small first version, then build it using project-specific acceptance checks. Practice writing a skill, reviewing with another agent, and handing work to a fresh session. The last level offers a read-only MCP exercise tailored to your project.
 
 Students need Python and access to PyPI. The facilitator provides the coding-agent environment and this workshop folder. Students do not need Node, Git, or the website build tools.
 

@@ -13,11 +13,11 @@ Choose a harness and install project instructions without building an app.
 
 ## Input and task
 
-Use the supplied workshop folder and a separate empty student project. Choose GitHub Copilot or OpenCode from the access your facilitator provides. Do not install a harness.
+Use the supplied workshop folder and a separate empty student project. Choose GitHub Copilot or OpenCode from the access your facilitator provides. Do not install a harness. You will choose what to build in level 1; this level prepares the workspace.
 
 1. Open this file as Markdown source. Find the YAML frontmatter between `---` lines, the heading, a link, and a code fence. Explain which fields describe the page and which text gives the task.
 2. Read [bootstrap-lab](../.agents/skills/bootstrap-lab/SKILL.md). If your harness does not discover it, ask the agent to read `workshop/.agents/skills/bootstrap-lab/SKILL.md` and follow it. Reading the file is a supported way to invoke these instructions.
-3. Give the agent your harness, workshop path, destination path, and the goal "local Python study queue." Ask for its plan before it writes project-specific extras. Keep the two folders separate.
+3. Give the agent your harness, workshop path, and destination path. Ask it to install the starter material and leave project-specific planning for level 1. Keep the two folders separate.
 4. Approve the bootstrap operation. From the workshop's parent folder, the script command has this form:
 
 ```text

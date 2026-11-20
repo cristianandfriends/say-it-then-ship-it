@@ -37,4 +37,4 @@ Include checks you ran and gaps, including if you find no issues.
 
 Ask the implementer to write a compact `HANDOFF.md` with decisions, changed files, exact commands/results, constraints, unresolved findings, and one next task. Start a fresh session and have it read the handoff and project instructions before editing.
 
-Reproduce review findings, fix confirmed bugs, and rerun checks. Run the CLI yourself and compare saved data with its output before accepting the change.
+Reproduce review findings, fix confirmed bugs, and rerun checks. Try the changed behavior through your project's interface and compare the result with the approved brief before accepting the change.
