@@ -8,7 +8,7 @@ order: 20
 
 Give one agent a small coding task. After it stops, ask a different agent to review the change. The reviewer reads the code and reports problems without changing files.
 
-Use this guide with [level 4](level-4-review.md) and [level 5](level-5-context.md). You can use the same coding app for both workers. Copilot calls a general worker `general-purpose`; OpenCode calls it `general`. Ask your facilitator to help you start one, or use a separate chat for the review.
+Use this guide with [level 5](level-5-review.md) and [level 6](level-6-context.md). You can use the same coding app for both workers. Copilot calls a general worker `general-purpose`; OpenCode calls it `general`. Ask your facilitator to help you start one, or use a separate chat for the review.
 
 Keep one agent in charge of file changes at a time.
 
@@ -49,7 +49,7 @@ Record check results, unfixed problems, and the next task from BRIEF.md.
 Keep it short. Do not change the app.
 ```
 
-Read the note, then start a new chat in the project and ask the next agent to read it and `AGENTS.md` before editing. [Level 5](level-5-context.md) walks through that transfer.
+Read the note, then start a new chat in the project and ask the next agent to read the handoff before editing. [Level 6](level-6-context.md) walks through that transfer.
 
 ## Check the result yourself
 

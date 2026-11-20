@@ -6,7 +6,7 @@ order: 24
 
 # Choose a skill or an agent role
 
-Use this guide with [level 3](level-3-skill.md) and [level 4](level-4-review.md).
+Use this guide with [level 3](level-3-skill.md) and [level 4](level-4-agent.md).
 A **skill** is a set of instructions you can reuse. An **agent role** gives
 a worker a job and limits on what it may do.
 
@@ -64,7 +64,7 @@ Do not add features or change code.
 
 ```text
 /frontend-design Plan a screen for [the feature in my brief].
-Read AGENTS.md and BRIEF.md. Keep it within our Python setup.
+Use BRIEF.md. Keep it within our Python setup.
 Show a layout and explain what someone would click or type.
 Wait for my approval before writing code.
 ```
@@ -78,9 +78,9 @@ For example:
 
 ```text
 Use software-engineering-expert to fix [one problem] from BRIEF.md.
-Read AGENTS.md. Leave unrelated features alone.
+Follow the engineering agent's instructions. Leave unrelated features alone.
 Explain the cause and planned change before editing.
-After I approve, write a failing test, fix the problem, and run the checks.
+After I approve, fix the problem and report the checks.
 Ask a different worker to review without editing.
 Return the changed files, results, and review.
 ```
@@ -99,8 +99,7 @@ Look in the chat's activity for the worker starting, the skill loading,
 and the checks running. Ask your facilitator to help you find that activity.
 An agent saying it used a worker or skill does not prove those steps happened.
 
-If a skill is missing, give its installed `SKILL.md` path and ask the agent to
-read it. If you cannot start a second worker, use a separate chat for review.
+If you cannot start a second worker, use a separate chat for review.
 Record "review pending" until you receive the review.
 
 [Work with two agents](two-agents.md) shows the review steps.

@@ -29,15 +29,6 @@ Explain the plan and ask for approval before changing files.
 I will choose my idea in level 1. Do not build an app yet.
 ```
 
-If the app cannot find the skill, give it this request instead, replacing the path:
-
-```text
-Read [workshop path]/.agents/skills/bootstrap-lab/SKILL.md
-and follow it to set up my separate project folder at [project path].
-Ask which app I use and get my approval before making changes.
-Do not build an app yet.
-```
-
 Answer the agent's question about your app. Read its plan before approving it. The skill tells the agent which Python script to run; you do not need to type that script's command.
 
 If a file exists and differs from the starter copy, stop and ask for help comparing them. Do not approve overwriting work you want to keep.
@@ -53,7 +44,7 @@ Ask the agent to show the files it copied. `AGENTS.md` holds your project's work
 
 The two apps use different agent-file settings. Let the skill choose those settings. Keep the Python rules in your copied `AGENTS.md`.
 
-Open a new chat in your **student project folder** before level 1. Ask the agent to read that folder's `AGENTS.md` and find the copied skills. Opening the workshop folder again would give it the workshop's instructions instead.
+Open a new chat in your **student project folder** before level 1. Your coding app loads that project's instructions. Opening the workshop folder again would give it the workshop's instructions instead.
 
 You need no extra packages or virtual environment to copy these files. If your idea needs a package later, use the same skill's [Python setup steps](../.agents/skills/bootstrap-lab/SKILL.md#prepare-python-dependencies). Do not build the workshop website.
 

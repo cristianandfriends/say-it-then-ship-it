@@ -95,6 +95,7 @@ test("keeps the home and reader pages inside a narrow mobile viewport", async ({
     "./",
     "files/lab/two-agents/",
     "files/lab/level-0-bootstrap/",
+    "files/lab/level-4-agent/",
     "files/agents/skills/bootstrap-lab/SKILL/",
     "files/opencode/agents/software-engineering-expert/",
   ]) {
@@ -123,7 +124,7 @@ test("lists the lab sequence before reusable tools and keeps references out of t
   await page.goto("./");
   const levels = page.getByRole("region", { name: "Lab levels", exact: true });
   const titles = await levels.locator(".file-title").allTextContents();
-  expect(titles).toHaveLength(7);
+  expect(titles).toHaveLength(8);
   titles.forEach((title, level) => expect(title).toMatch(new RegExp(`^Level ${level}:`)));
 
   const tools = page.getByRole("region", { name: "Agents and skills", exact: true });
@@ -133,6 +134,36 @@ test("lists the lab sequence before reusable tools and keeps references out of t
   await levels.getByRole("link").first().click();
   await page.locator(`.prose a[href="${withBase("files/lab/level-1-brief/")}"]`).last().click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(/^Level 1:/);
+});
+
+test("connects skill creation to the project specialist and review levels", async ({ page }) => {
+  await page.goto("files/lab/level-3-skill/");
+  await page.locator(".prose").getByRole("link", {
+    name: "Level 4: Make a specialized subagent", exact: true,
+  }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Level 4: Make a specialized subagent",
+  );
+  await expect(page.locator(".diagram svg")).toBeVisible();
+  await expect(page.locator(".diagram svg")).toHaveAccessibleName(/\S/);
+  await page.locator(".prose").getByRole("link", {
+    name: "Level 5: Extend and review", exact: true,
+  }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Level 5: Extend and review",
+  );
+});
+
+test("preserves published reader links after renumbering the later levels", async ({ page, baseURL }) => {
+  for (const [previous, current, title] of [
+    ["level-4-review", "level-5-review", "Level 5: Extend and review"],
+    ["level-5-context", "level-6-context", "Level 6: Hand off the context"],
+    ["level-6-tools", "level-7-tools", "Level 7: Try a read-only MCP tool"],
+  ]) {
+    await page.goto(`files/lab/${previous}/`);
+    await expect(page).toHaveURL(new URL(withBase(`files/lab/${current}/`), baseURL).href);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(title);
+  }
 });
 
 test("publishes the native OpenCode agent in the material directory", async ({ page }) => {

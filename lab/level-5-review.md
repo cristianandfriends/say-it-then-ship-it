@@ -1,11 +1,11 @@
 ---
-title: "Level 4: Extend and review"
+title: "Level 5: Extend and review"
 description: Improve one thing and ask a different agent to review the change.
-order: 5
-level: 4
+order: 6
+level: 5
 ---
 
-# Level 4: Extend and review
+# Level 5: Extend and review
 
 ## Goal
 
@@ -26,9 +26,8 @@ After approving the plan, ask the `software-engineering-expert` agent to build t
 
 ```text
 Use the software-engineering-expert agent to make the change I approved.
-Read AGENTS.md and BRIEF.md. Leave other features alone.
-Write a test that catches the missing feature or bug before changing the app.
-Show its failing result, make the change, then run the checks again.
+Use BRIEF.md and follow the agent's engineering instructions.
+Leave other features alone.
 Have a different worker review the change without editing files.
 Show me the changes, check results, and that worker's review.
 ```
@@ -77,4 +76,4 @@ Show the reviewer an example that worked before your change. Ask it to try that 
 
 </details>
 
-Previous: [Level 3: Make a check-work skill](level-3-skill.md) · Next: [Level 5: Hand off the context](level-5-context.md)
+Previous: [Level 4: Make a specialized subagent](level-4-agent.md) · Next: [Level 6: Hand off the context](level-6-context.md)

@@ -53,7 +53,7 @@ Paste this into chat. In OpenCode, use `@stop-slop`:
 
 ```text
 /stop-slop Help me plan one feature for [idea and who will use it].
-Read AGENTS.md. Keep the plan inside our workshop's Python setup.
+Keep the plan inside our workshop's Python setup.
 Describe what someone starts with, what they do, and what they should see.
 Add one mistake they could make and what should happen.
 Say what information must stay safe if that action fails.

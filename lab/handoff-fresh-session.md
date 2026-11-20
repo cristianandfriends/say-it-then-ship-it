@@ -7,7 +7,7 @@ order: 23
 # Start a fresh session with a handoff
 
 Use this guide when a chat grows hard to follow or you return to your project
-after a break. It supports [level 5](level-5-context.md). A **handoff** is a
+after a break. It supports [level 6](level-6-context.md). A **handoff** is a
 short note telling the next agent what works and what to do next.
 
 ## Put each fact where you can find it
@@ -43,7 +43,7 @@ current chat; use `@stop-slop` in OpenCode:
 
 ```text
 /stop-slop Write HANDOFF.md for a new chat.
-Use AGENTS.md, BRIEF.md, the project files, and our latest check results.
+Use BRIEF.md, the project files, and our latest check results.
 Say what works, what we decided, and which files explain those decisions.
 Include how to run the project and the Python environment we used.
 List unfixed problems, failed checks, and checks we could not run.
@@ -62,7 +62,7 @@ Use your app's new-chat control while keeping the project open. Ask your
 facilitator where to find it. Then paste this into the new chat:
 
 ```text
-Read AGENTS.md, BRIEF.md, and HANDOFF.md.
+Read BRIEF.md and HANDOFF.md.
 Explain what the project does and the next task in your own words.
 Tell me what results to expect and what must keep working.
 Name the files you read and anything missing or unclear.
@@ -82,7 +82,7 @@ Ask the new agent to keep it working when it adds sorting.
 ## Check execution after the handoff
 
 Some apps can summarize an old chat. Read any summary for missing decisions.
-In level 5, open a new chat and get a response from the new agent; a summary
+In level 6, open a new chat and get a response from the new agent; a summary
 inside the old chat does not complete that step.
 
 After approving the task and receiving the change, use your checking skill.

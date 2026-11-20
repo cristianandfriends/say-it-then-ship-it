@@ -1,11 +1,11 @@
 ---
-title: "Level 5: Hand off the context"
+title: "Level 6: Hand off the context"
 description: Write a note that helps you continue your project in a new chat.
-order: 6
-level: 5
+order: 7
+level: 6
 ---
 
-# Level 5: Hand off the context
+# Level 6: Hand off the context
 
 ## Goal
 
@@ -13,7 +13,7 @@ Start a new chat and continue your project using a short handoff note.
 
 ## Input and task
 
-Use your working project from level 4. An agent can keep a limited amount of text in view at once. That limit is its **context window**. In a long chat, it may miss earlier instructions or decisions.
+Use your working project from level 5. An agent can keep a limited amount of text in view at once. That limit is its **context window**. In a long chat, it may miss earlier instructions or decisions.
 
 Save important facts in project files so a new chat can read them. A **handoff** is a note explaining what works, what you decided, and what to do next.
 
@@ -40,7 +40,7 @@ Use your app's new-chat control while keeping the student project open. Ask your
 Paste this into the new chat:
 
 ```text
-Read AGENTS.md, BRIEF.md, and HANDOFF.md.
+Read BRIEF.md and HANDOFF.md.
 Explain what the project does and the one task I want to do next.
 Tell me what should happen in our examples and what must stay unchanged.
 List anything missing or unclear. Do not change files until I approve.
@@ -48,7 +48,7 @@ List anything missing or unclear. Do not change files until I approve.
 
 Compare its answer with your plan. If it missed a fact, add that fact to `HANDOFF.md` and ask the new agent to read the corrected file.
 
-Approve the task once the new agent understands it. Ask it to use the engineering agent and TDD steps from level 4. After the change, use your skill:
+Approve the task once the new agent understands it. Ask it to use the engineering agent as you did in level 5. After the change, use your skill:
 
 ```text
 /check-work Check the new feature and the examples that worked before.
@@ -70,4 +70,4 @@ Think of the note as what you would leave a classmate who takes over tomorrow. N
 
 </details>
 
-Previous: [Level 4: Extend and review](level-4-review.md) · Next: [Level 6: Try a read-only MCP tool](level-6-tools.md)
+Previous: [Level 5: Extend and review](level-5-review.md) · Next: [Level 7: Try a read-only MCP tool](level-7-tools.md)

@@ -1,11 +1,11 @@
 ---
-title: "Level 6: Try a read-only MCP tool"
+title: "Level 7: Try a read-only MCP tool"
 description: "Bonus: let your agent use one safe project feature as a tool."
-order: 7
-level: 6
+order: 8
+level: 7
 ---
 
-# Level 6: Try a read-only MCP tool
+# Level 7: Try a read-only MCP tool
 
 ## Goal
 
@@ -15,24 +15,33 @@ Let your agent call one project feature as a tool and check the result. This lev
 
 A **skill** tells your agent how to do a task. A **tool** lets it ask a program to do something and return a result. **MCP**, the Model Context Protocol, is one way to connect those programs to a coding agent.
 
-Choose one small part of your idea that can read or calculate something without changing anything. For example, a tool could count the words in sample text. Use made-up data and a result you can check yourself.
+Look at the problem you described in `BRIEF.md`. Choose one useful action your agent could perform for that project without changing saved information. For a writing project, that might mean checking a draft against a word limit. For a game, it might mean checking whether a sample move follows your rules. Use made-up data and a result you can check yourself.
 
-Agree on what you will give the tool, what it should return, and what should happen if you give it something invalid. Add those examples to your brief.
+Ask your agent to suggest a tool based on your brief:
+
+```text
+Use BRIEF.md and our conversation to suggest two read-only MCP tools
+that would help with this project's problem.
+For each, explain when we would use it and give an example request and result.
+Keep the tool local, with made-up data and no outside services.
+Recommend one small option. Do not write code until I choose.
+```
+
+Choose one and add its purpose to your brief. Agree on what you will give the tool, what it should return, and what should happen if you give it something invalid. You will build a small MCP server that offers that tool for your project.
 
 ## Ask the setup skill for the package
 
-The other levels support Python 3.9. Current versions of the `mcp` package need Python 3.10 or newer. Ask the skill to check compatibility before installing it. Paste this into chat; use `@bootstrap-lab` in OpenCode:
+Paste this into chat; use `@bootstrap-lab` in OpenCode:
 
 ```text
 /bootstrap-lab Prepare this project's environment for the mcp[cli] package.
-Check whether the package supports the Python on this computer.
 Explain the plan and ask before installing anything.
 Reuse our project environment. Keep packages inside a virtual environment.
 Use PyPI and do not download another Python version.
 If setup cannot work here, stop and explain why.
 ```
 
-If setup fails or Python is too old, go to **Required safe fallback** below. You can finish that route without installing MCP.
+If setup fails, go to **Required safe fallback** below. You can finish that route without installing MCP.
 
 ## Build one read-only tool
 
@@ -40,7 +49,8 @@ A **server** is the program that offers the tool to your agent. **Read-only** me
 
 ```text
 Use software-engineering-expert to build one local MCP tool for [project action].
-Read AGENTS.md and the examples in BRIEF.md. Write tests before the code.
+Use the purpose and examples we agreed on in BRIEF.md.
+Follow the engineering agent's instructions.
 Use FastMCP from mcp.server.fastmcp, from the mcp[cli] package.
 Allow only the agreed inputs. Return a clear error for invalid input.
 The tool must not write files, run commands, make network calls, or use credentials.
@@ -105,4 +115,4 @@ Ask the agent to keep the calculation separate from the MCP connection code. Tha
 
 </details>
 
-Previous: [Level 5: Hand off the context](level-5-context.md) · Next: [Start here](start-here.md)
+Previous: [Level 6: Hand off the context](level-6-context.md) · Next: [Start here](start-here.md)

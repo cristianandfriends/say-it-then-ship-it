@@ -21,7 +21,7 @@ Pick **one thing** your first version should do. Ask whether you can build it wi
 
 ```text
 /stop-slop Help me write BRIEF.md, a short plan for my project.
-Read AGENTS.md. I want to build [idea] for [who will use it].
+I want to build [idea] for [who will use it].
 The first thing I want them to do is [one action].
 Keep the first version small enough to run on this workshop computer.
 Ask me about choices instead of guessing.

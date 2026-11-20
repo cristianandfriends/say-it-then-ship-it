@@ -19,7 +19,7 @@ Ask the agent to write the skill in plain language. Paste this into chat; use `@
 
 ```text
 /stop-slop Create a check-work skill for this project.
-Read AGENTS.md and the checks we recorded in BRIEF.md.
+Use the checks we recorded in BRIEF.md.
 Put the skill in the right folder for my coding app.
 Tell it to read the brief, run our checks, and report what passed or failed.
 It must report missing checks and ask before fixing code or changing the plan.
@@ -48,15 +48,13 @@ Some skills also have `scripts/` for code they run and `assets/` for templates o
 
 ## Use your new skill twice
 
-Start a new chat in the project if your app has not found the skill. Paste this into chat; use `@check-work` in OpenCode:
+Paste this into chat; use `@check-work` in OpenCode:
 
 ```text
 /check-work Check my project against BRIEF.md.
 Run the checks and report what passed, failed, or could not be checked.
 Do not change the app.
 ```
-
-If the skill is missing, give the agent the `SKILL.md` path above and ask it to read and follow that file.
 
 Next, ask the agent to add one automatic check for another example from your brief. Read its explanation and approve that test change. Use the skill again:
 
@@ -76,4 +74,4 @@ The skill should name your project's real checks from level 2. It should not cop
 
 </details>
 
-Previous: [Level 2: Build your first feature](level-2-build.md) · Next: [Level 4: Extend and review](level-4-review.md)
+Previous: [Level 2: Build your first feature](level-2-build.md) · Next: [Level 4: Make a specialized subagent](level-4-agent.md)

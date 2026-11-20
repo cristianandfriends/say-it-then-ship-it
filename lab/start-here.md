@@ -15,7 +15,7 @@ Your coding agent can write code and explain it. You decide what to build and ch
 ## What to bring
 
 - Access to GitHub Copilot or OpenCode, arranged with your facilitator. For Copilot, you need a [GitHub account](https://github.com/copilot); you may qualify for the [education pack](https://education.github.com/pack).
-- Python 3.9 or newer. Ask your facilitator to help you check it.
+- Python 3.15 or newer, supplied with the workshop environment.
 - The workshop folder and a separate empty project folder, supplied by your facilitator.
 
 Your project will use Python and, if needed, packages from PyPI, the Python package directory. Choose a first version that runs on your workshop computer. You do not need to install Git, Node, or the workshop website, or sign up for another service.
@@ -31,7 +31,7 @@ A **skill** is a named set of instructions your agent can follow. For example, `
 | Copilot | `/stop-slop Write a short description of my idea.` |
 | OpenCode | `@stop-slop Write a short description of my idea.` |
 
-Make the same change for `/bootstrap-lab`, `/frontend-design`, and `/check-work`. You create `check-work` in level 3; it will not exist before then. If your app cannot find a skill, ask the agent to read its `SKILL.md` file and follow the instructions. Level 0 shows where those files live.
+Make the same change for `/bootstrap-lab`, `/frontend-design`, and `/check-work`. You create `check-work` in level 3; it will not exist before then.
 
 An **agent role** gives a worker a job, such as writing code or reviewing it. A skill gives that worker steps to follow. Your facilitator may call Copilot or OpenCode a **harness**: the app that lets the agent read files and use tools.
 
@@ -47,7 +47,7 @@ Level 0 copies starter files without installing packages. If your project needs 
 
 ```text
 /bootstrap-lab Prepare a Python environment for [package my project needs].
-Read my project's AGENTS.md and follow Prepare Python dependencies.
+Follow Prepare Python dependencies.
 Explain what you will install and ask for approval first.
 Use the Python already on this computer and packages from PyPI.
 Do not install into system Python or download another Python version.
@@ -67,9 +67,10 @@ Your project does not need network access beyond PyPI. Your facilitator can prov
 | [1: Brief](level-1-brief.md) | Choose your idea and one thing it should do | Your approved `BRIEF.md` plan |
 | [2: Build](level-2-build.md) | Build and try that first feature | Expected and actual results |
 | [3: Skill](level-3-skill.md) | Make a skill that checks your project | Skill file and two check reports |
-| [4: Review](level-4-review.md) | Improve one thing and get a second opinion | Review, fixes, and check results |
-| [5: Context](level-5-context.md) | Continue your project in a new chat | `HANDOFF.md` and a working change |
-| [6: Tools](level-6-tools.md) | Bonus: give your agent a read-only tool | Tool result or local-only result |
+| [4: Subagent](level-4-agent.md) | Create a specialist for your idea and try it | Agent file and its response to a task |
+| [5: Review](level-5-review.md) | Improve one thing and get a second opinion | Review, fixes, and check results |
+| [6: Context](level-6-context.md) | Continue your project in a new chat | `HANDOFF.md` and a working change |
+| [7: Tools](level-7-tools.md) | Bonus: give your agent a read-only tool | Tool result or local-only result |
 
 Use [Work with two agents](two-agents.md) during review and handoff. Keep your prompts, results, and decisions in project notes. Use made-up sample data instead of private information. Ask what code will do before you approve running it.
 

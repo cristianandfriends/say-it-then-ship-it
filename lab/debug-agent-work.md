@@ -8,7 +8,7 @@ order: 22
 
 Use this guide when an agent says "done" but you have not tried the result,
 or something does not work as you expected. It supports
-[level 2](level-2-build.md) and [level 4](level-4-review.md).
+[level 2](level-2-build.md) and [level 5](level-5-review.md).
 
 ## Compare a claim with an observation
 
@@ -55,7 +55,7 @@ dependency; do not install it into system Python.
 Paste this into chat. This is a question for your agent, not a new skill:
 
 ```text
-Help me understand this problem. Read AGENTS.md and BRIEF.md.
+Help me understand this problem. Read BRIEF.md.
 I started with: [sample information].
 I did: [steps I tried].
 I expected: [result from my brief].

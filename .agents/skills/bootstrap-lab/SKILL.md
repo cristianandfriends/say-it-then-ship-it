@@ -9,9 +9,10 @@ Use this skill when a workshop participant wants to set up a project for coding
 agents. Treat the shipped material as examples to evolve, not an exhaustive
 rulebook.
 
-For an environment-only request in a bootstrapped project, read its `AGENTS.md`
-and go to [Prepare Python dependencies](#prepare-python-dependencies). Do not
-repeat the harness selection or starter installation.
+For an environment-only request in a bootstrapped project, go to
+[Prepare Python dependencies](#prepare-python-dependencies). For role or skill
+planning, go to [Plan before adding more roles or skills](#plan-before-adding-more-roles-or-skills).
+Do not repeat harness selection or starter installation for these requests.
 
 ## Establish the scope
 
@@ -89,9 +90,8 @@ fetch replacements from the network.
 - The installer preserves unrelated files. It does not configure global agents,
   install dependencies, or touch `opencode.json`.
 
-Check the reported paths and restart or open a session if your harness needs to
-discover the new skill and agent. Ask the harness to load `bootstrap-lab`; verify
-that it can find the engineering agent.
+Check the reported paths and confirm that the starter files match the selected
+harness.
 
 ## Prepare Python dependencies
 
@@ -143,10 +143,18 @@ Start project-specific planning after the participant chooses an idea. If they
 have not chosen one, finish the starter installation and defer this step to
 level 1. Do not make project selection a prerequisite for bootstrap.
 
-Use the participant's project goal to identify the next deliverable, its
-acceptance checks, and constraints. Ask which repeated tasks need a reusable
-skill and which decisions need a separate role. Propose a small plan before
-generating extra agents or skills, and get approval for their names and scope.
+Use `BRIEF.md`, the current conversation, and the project's existing work to
+identify the next deliverable, its acceptance checks, and constraints. Suggest
+roles that address this project's problem, rather than variations on the
+general engineering agent. For each suggestion, name the job, needed inputs,
+allowed actions, expected output, and handoff point. Recommend a small first
+assignment the participant can check.
+
+Ask which repeated tasks need a reusable skill and which decisions need a
+separate role. Get approval for names and scope before creating files. Use the
+harness's native agent directory and frontmatter, following the installed
+engineering agent's format. Keep existing agent files intact. Do not add a
+fixed model or change global settings.
 
 Give each agent a role, authority, required inputs, expected outputs, and handoff
 boundary. Keep detailed procedures in skills. For a skill, start with a short

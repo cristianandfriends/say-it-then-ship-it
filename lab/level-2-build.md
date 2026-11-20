@@ -13,23 +13,19 @@ Build the first feature from `BRIEF.md` and check what it does.
 
 ## Input and task
 
-Give your coding agent `AGENTS.md` and the approved `BRIEF.md` from [level 1](level-1-brief.md). Ask it to build the first feature and leave the "Later" list alone.
+Use the approved `BRIEF.md` from [level 1](level-1-brief.md). Ask the `software-engineering-expert` agent to build the first feature and leave the "Later" list alone. Its instructions cover how to write tests and get a separate review.
 
 A **test** is a small piece of code that checks whether something gives the expected result. Your agent can write and run tests. You will try the feature yourself too.
 
 Paste this into chat, replacing the brackets:
 
 ```text
-Read AGENTS.md and BRIEF.md. Build [the first feature I approved].
-Before building it, write a test for one of our examples.
-Run the test and show that it fails because the feature is missing.
-Then build the feature and run the test again.
+Use the software-engineering-expert agent to build [the first feature I approved].
+Use BRIEF.md and follow the agent's engineering instructions.
 Check the example that should work and the example with a mistake.
 Explain how I can open or run the project and try those examples.
 Tell me what files changed and what you could not check.
 ```
-
-Writing a test before the feature is **test-driven development**, or **TDD**. If the test fails, ask why. A missing package or a typo in the test does not show that the feature is missing.
 
 Use made-up information while checking. If the project saves information, check that a failed action does not erase something you wanted to keep. Ask the agent to explain what code and new packages will do before you approve running or installing them.
 
