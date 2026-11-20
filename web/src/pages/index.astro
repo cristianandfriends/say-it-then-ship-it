@@ -24,6 +24,7 @@ const groups = [
     files: materials.filter(
       (material) =>
         material.sourcePath.startsWith(".github/agents/") ||
+        material.sourcePath.startsWith(".opencode/agents/") ||
         material.sourcePath.endsWith("/SKILL.md"),
     ),
   },

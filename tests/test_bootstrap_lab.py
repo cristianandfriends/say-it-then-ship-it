@@ -117,6 +117,11 @@ class BootstrapLabTests(unittest.TestCase):
                 else:
                     self.assertIn("mode: subagent", header)
                     self.assertNotIn("name:", header)
+                    self.assertEqual(
+                        installed,
+                        (ROOT / ".opencode" / "agents" / filename).read_text(encoding="utf-8"),
+                        "Keep the native OpenCode agent in sync with bootstrap output.",
+                    )
                 self.assertEqual(set(path.name for path in target.iterdir()), {native, "AGENTS.md"})
 
     def test_python_validation_artifacts_are_excluded_for_both_harnesses(self):

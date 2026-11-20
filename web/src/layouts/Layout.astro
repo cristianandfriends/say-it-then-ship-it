@@ -49,6 +49,7 @@ const canonical = new URL(Astro.url.pathname, site);
           <a href={withBase("#files")}>Lab files</a>
           <a class="discord-link" href={discordUrl}>Join Discord <span aria-hidden="true">↗</span></a>
         </nav>
+        <a class="repository-link" href={repositoryUrl}>GitHub <span aria-hidden="true">↗</span></a>
       </header>
       <main id="main">
         <slot />

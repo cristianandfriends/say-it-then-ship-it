@@ -18,6 +18,8 @@ python .agents/skills/bootstrap-lab/scripts/bootstrap_lab.py --harness copilot -
 
 Use `--harness opencode` for OpenCode. Read the proposed setup before running it; the installer preserves unrelated files and refuses conflicting files.
 
+The engineering agent ships in native formats for [Copilot](.github/agents/software-engineering-expert.agent.md) and [OpenCode](.opencode/agents/software-engineering-expert.md). Both use the same role and engineering guidance.
+
 ## Maintain the website
 
 Use Node.js 22.23.4 or newer and npm.

@@ -22,6 +22,10 @@ test("puts the deck first and links to the live chat and repository", async ({ p
     "href",
     repositoryUrl,
   );
+  await expect(page.getByRole("banner").getByRole("link", { name: "GitHub", exact: true })).toHaveAttribute(
+    "href",
+    repositoryUrl,
+  );
   await page.keyboard.press("Tab");
   await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
 });
@@ -49,9 +53,11 @@ test("keeps the home and reader pages inside a narrow mobile viewport", async ({
     "files/lab/two-agents/",
     "files/lab/level-0-bootstrap/",
     "files/agents/skills/bootstrap-lab/SKILL/",
+    "files/opencode/agents/software-engineering-expert/",
   ]) {
     await page.goto(path);
     await expect(page.getByRole("link", { name: "Join Discord" })).toBeVisible();
+    await expect(page.getByRole("banner").getByRole("link", { name: "GitHub", exact: true })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
   }
 });
@@ -73,12 +79,23 @@ test("lists the lab sequence before reusable tools and keeps references out of t
   titles.forEach((title, level) => expect(title).toMatch(new RegExp(`^Level ${level}:`)));
 
   const tools = page.getByRole("region", { name: "Agents and skills", exact: true });
-  await expect(tools.locator(".file-link")).toHaveCount(4);
+  await expect(tools.locator(".file-link")).toHaveCount(5);
   await expect(page.locator(".file-path").filter({ hasText: "/references/" })).toHaveCount(0);
 
   await levels.getByRole("link").first().click();
   await page.locator(`.prose a[href="${withBase("files/lab/level-1-brief/")}"]`).last().click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(/^Level 1:/);
+});
+
+test("publishes the native OpenCode agent in the material directory", async ({ page }) => {
+  await page.goto("./");
+  await page.getByRole("region", { name: "Agents and skills", exact: true })
+    .locator(`a[href="${withBase("files/opencode/agents/software-engineering-expert/")}"]`).click();
+  await expect(page.getByRole("heading", { name: "Software engineering expert", exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: "View source" })).toHaveAttribute(
+    "href",
+    `${repositoryUrl}/blob/HEAD/.opencode/agents/software-engineering-expert.md`,
+  );
 });
 
 test("resolves bundled skill references into readable site pages", async ({ page, baseURL }) => {
